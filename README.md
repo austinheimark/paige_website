@@ -1,2 +1,1 @@
--Website for my sister
--Backend in flask
+-Website for my sister, backend in flask
