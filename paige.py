@@ -7,9 +7,14 @@ def home():
     return render_template('home.html')
 
 #route to paige's resume
-@app.route('/')
+@app.route('/resume')
 def resume():
     return render_template('resume.html')
+
+#route to paige's contact page
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
