@@ -2,19 +2,29 @@
 <html>
 	<head>
 		<title>Paige Heimark</title>
-		<strong><link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}"></strong>
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
 	</head>
 
 	<body>
 		<header>
-			<div class="container">
-				<h1 class="logo">Paige Heimark</h1>
+			<div class="container row">
+				
+				<div class="span4">
+					<ul class="nav nav-tabs nav-stacked">
+						<li><a href="#">ART</a></li>
+						<li><a href="#">RESUME</a></li>
+						<li><a href="#">CONTACT</a></li>
+					</ul>
+				</div>
+
+				<div class="span8">
+					{% block content %}
+					{% endblock %}
+				</div>
+
+
 			</div>
 		</header>
 
-		<div>
-			{% block content %}
-			{% endblock %}
-		</div>
 	</body>
 </html>
