@@ -7,4 +7,3 @@ class TestFunctionalGetRequests(unittest.TestCase):
         check = self.app.get('/')
         assert check == 202
 
-    

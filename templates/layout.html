@@ -2,29 +2,40 @@
 <html>
 	<head>
 		<title>Paige Heimark</title>
+		
+		<link rel="stylesheet" type="text/css" href="static/css/style.css">
 		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+		<script src="static/js/jquery-1.10.2.min.js"></script>
+		<script src="static/js/bootstrap.min.js"></script>
+
 	</head>
 
 	<body>
-		<header>
-			<div class="container row">
-				
-				<div class="span4">
-					<ul class="nav nav-tabs nav-stacked">
-						<li><a href="#">ART</a></li>
-						<li><a href="#">RESUME</a></li>
-						<li><a href="#">CONTACT</a></li>
-					</ul>
-				</div>
 
-				<div class="span8">
-					{% block content %}
-					{% endblock %}
-				</div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="#">Paige Heimark</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li><a href="#">ART</a></li>
+              <li><a href="/paige_resume.pdf">RESUME</a></li>
+              <li><a href="/contact.html">CONTACT</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-			</div>
-		</header>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
 
 	</body>
 </html>
