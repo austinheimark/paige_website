@@ -3,8 +3,8 @@
 	<head>
 		<title>Paige Heimark</title>
 		
-		<link rel="stylesheet" type="text/css" href="../static/css/style.css">
-		<link rel="stylesheet" type="text/css" href="../static/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="static/css/style.css">
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
 		<script src="static/js/jquery-1.10.2.min.js"></script>
 		<script src="static/js/bootstrap.min.js"></script>
 
@@ -23,9 +23,15 @@
           <a class="brand" href="/">Paige Heimark</a>
           <div class="nav-collapse collapse">
             <ul class="nav pull-right">
-              <li><a href="#">ART</a></li>
-              <li><a href="/resume">RESUME</a></li>
-              <li><a href="/contact">CONTACT</a></li>
+              <li class="dropdown">
+              	<a href="#" class="dropdown-toggle" data-toggle="dropdown">ART<b class="caret"></b></a>
+              		<ul class="dropdown-menu">
+              			<li><a href="{{ url_for('drawings') }}">DRAWINGS</a></li>
+              			<li><a href="{{ url_for('paintings') }}">PAINTINGS</a></li>
+              		</ul>
+              </li>
+              <li><a href="{{ url_for('resume') }}">RESUME</a></li>
+              <li><a href="{{ url_for('contact') }}">CONTACT</a></li>
             </ul>
           </div>
         </div>

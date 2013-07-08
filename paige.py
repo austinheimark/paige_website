@@ -16,6 +16,16 @@ def resume():
 def contact():
     return render_template('contact.html')
 
+#route to paige's drawings
+@app.route('/drawings')
+def drawings():
+    return render_template('drawings.html')
+
+#route to paige's paintings
+@app.route('/paintings')
+def paintings():
+    return render_template('paintings.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
 
