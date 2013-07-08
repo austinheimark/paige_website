@@ -1,4 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
 	<h1>PAINTINGS works</h1>
+
+	<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item paige-pics"><img src="http://static.tumblr.com/44e684098f0ac7c33a6640c20556b923/jxahzkb/fZ5mod2rw/tumblr_static_dog-logo.jpg"></div>
+    <div class="item paige-pics"><img src="http://images4.fanpop.com/image/photos/17700000/Wallpaperz-random-17724995-1280-800.jpg"></div>
+    <div class="item paige-pics"><img src="http://www.fastcocreate.com/multisite_files/cocreate/imagecache/slideshow-large/slideshow/2013/01/1682345-slide-slide-1-biz-stone-explains-how-he-turned-91-random-photos-into-a-movie.jpg"></div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
 {% endblock %}
