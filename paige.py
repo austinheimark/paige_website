@@ -26,5 +26,10 @@ def drawings():
 def paintings():
     return render_template('paintings.html')
 
+#route to paige's sculptures
+@app.route('/sculptures')
+def sculptures():
+    return render_template('sculptures.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

@@ -2,16 +2,14 @@ body {
 	padding-top: 60px;
 }
 
-.contact-attr {
-	text-align: center;
+.contact-info {
 	padding-top: 200px;
-	background-image:url('DSCF3809.jpg');
+	text-align: left;
 }
 
-.paige-pics {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
+#contact-pic {
+	padding-top: 50px;
+	text-align: center;
 }
 
 .carousel-inner { 
@@ -20,4 +18,16 @@ body {
 
 .carousel .item > img {
 	display: inline-block;
+}
+
+.home-img {
+	padding-left: 225px;
+	padding-top: 25px;
+}
+
+.paige-pics {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+
 }
