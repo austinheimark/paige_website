@@ -13,3 +13,11 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.carousel-inner { 
+	text-align: center;
+}
+
+.carousel .item > img {
+	display: inline-block;
+}
