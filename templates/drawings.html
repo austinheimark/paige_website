@@ -1,4 +1,20 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>DRAWINGS works</h1>
+	<h1>DRAWINGS</h1>
+
+	<div id="myCarousel" class="carousel slide">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <div class="active item paige-pics"><img src="http://farm3.staticflickr.com/2857/9237764029_0b768b02cd.jpg" width="479" height="500" alt="DSCF3809"></div>
+    <div class="item paige-pics"><img src="http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg" width="394" height="500" alt="DSCF3761"></div>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+</div>
 {% endblock %}

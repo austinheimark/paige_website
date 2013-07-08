@@ -8,7 +8,7 @@ body {
 }
 
 #contact-pic {
-	padding-top: 50px;
+	padding-top: 20px;
 	text-align: center;
 }
 
@@ -29,5 +29,4 @@ body {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-
 }
