@@ -34,10 +34,13 @@ def sculptures():
 
 @app.route('/admin')
 def admin():
-    if '9f4yZIjq' in request.cookies and request.cookies['9f4yZIjq'] == 'CsyGlIE0':
-        return render_template('admin.html', page='ADMIN')
+    try:
+        if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
+            return render_template('admin.html', page='ADMIN')
+    except KeyError:
+        pass
     abort(401)
-
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
