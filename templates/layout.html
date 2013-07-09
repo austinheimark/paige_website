@@ -1,8 +1,13 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Paige Heimark</title>
-		
+    
+    {% if page %}
+		<title>Paige Heimark | {{page}}</title>
+    {% else %}
+    <title>Paige Heimark</title>
+    {% endif %}
+
 		<link rel="stylesheet" type="text/css" href="static/css/style.css">
 		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
@@ -35,6 +40,9 @@
               </li>
               <li><a href="{{ url_for('resume') }}">RESUME</a></li>
               <li><a href="{{ url_for('contact') }}">CONTACT</a></li>
+              <div class="btn-group action">
+                <button class="btn">Sign in</button>
+              </div>
             </ul>
           </div>
         </div>
@@ -42,6 +50,7 @@
     </div>
 
     <div class="container">
+      <h1>{{page}}</h1>
       {% block content %}
       {% endblock %}
     </div>
