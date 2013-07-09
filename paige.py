@@ -9,7 +9,7 @@ def home():
 #route to paige's resume
 @app.route('/resume')
 def resume():
-    return render_template('resume.html')
+    return render_template('paige_resume.htm')
 
 #route to paige's contact page
 @app.route('/contact')
