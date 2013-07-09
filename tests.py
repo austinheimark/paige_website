@@ -2,16 +2,17 @@ import unittest
 import pytest
 from paige import app
 
-class TestFunctionalGetRequests(unittest.TestCase):
+class BaseClass(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
 
+class TestFunctionalGetRequests(BaseClass):
     def test_home_page(self):
         response = self.app.get('/')
         assert response.status_code == 200
 
 @pytest.mark.admin
-class TestAdminPage(unittest.TestCase):
+class TestAdminPage(BaseClass):
     def test_admin_page(self):
         response = self.app.get('/admin')        
         assert response.status_code == 200
