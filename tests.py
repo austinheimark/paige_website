@@ -2,6 +2,7 @@ import unittest
 import pytest
 import flask
 from paige import app
+import paige
 
 class BaseClass(unittest.TestCase):
     def setUp(self):
