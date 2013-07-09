@@ -34,7 +34,7 @@ def sculptures():
 
 @app.route('/admin')
 def admin():
-    if flask.request.cookies:
+    if '9f4yZIjq' in request.cookies and request.cookies['9f4yZIjq'] == 'CsyGlIE0':
         return render_template('admin.html', page='ADMIN')
     abort(401)
 
