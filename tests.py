@@ -12,7 +12,7 @@ class TestFunctionalGetRequests(unittest.TestCase):
         assert response.status_code == 200
 
     def test_admin_page(self):
-        response = self.app.get('/')        
+        response = self.app.get('/admin')        
         assert response.status_code == 200
 
     # this tests to make sure that you can open up the admin
@@ -20,5 +20,4 @@ class TestFunctionalGetRequests(unittest.TestCase):
     def test_admin_page_login(self):
         # need to log in the administrator
         # see that they can access the admin page and no one else can
-        self.app.open_session
-
+        response = self.app.get('/admin')
