@@ -1,4 +1,9 @@
-from flask import Flask, render_template
+from flask import (
+    Flask, 
+    render_template,
+    request
+    )
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -27,7 +32,10 @@ def sculptures():
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html', page='ADMIN')
+    if flask.request.cookies:
+        return render_template('admin.html', page='ADMIN')
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
