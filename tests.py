@@ -5,6 +5,7 @@ from paige import app
 
 class BaseClass(unittest.TestCase):
     def setUp(self):
+        paige.app.config['TESTING'] = True
         self.app = app.test_client()
 
 class TestFunctionalGetRequests(BaseClass):
