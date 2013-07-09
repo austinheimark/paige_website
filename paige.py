@@ -1,8 +1,10 @@
 from flask import (
     Flask, 
     render_template,
-    request
-    )
+    request,
+    abort
+)
+import flask
 
 app = Flask(__name__)
 
@@ -34,7 +36,7 @@ def sculptures():
 def admin():
     if flask.request.cookies:
         return render_template('admin.html', page='ADMIN')
-
+    abort(401)
 
 
 if __name__ == "__main__":
