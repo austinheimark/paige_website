@@ -42,6 +42,10 @@ def admin():
         pass
     abort(401)
 
+@app.errorhandler(401):
+def unauthorized_page():
+    return render_template('unauthorized.html'), 401
+
 
 if __name__ == "__main__":
     app.run(debug=True)
