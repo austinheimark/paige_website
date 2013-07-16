@@ -3,12 +3,11 @@
 
     <div class="container span4">
 
-      <form class="form-signin">
+      <form class="form-signin" method="post" action="/login/authenticate">
         <h2 class="form-signin-heading"></h2>
-        <input type="password" class="input-block-level" placeholder="Password">
+        <input name="password" type="password" class="input-block-level" placeholder="Password">
         <button class="btn btn-large btn-primary" type="submit">Login</button>
       </form>
-
     </div>
 
 {% endblock %}}
