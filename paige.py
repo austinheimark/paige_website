@@ -8,6 +8,9 @@ from flask import (
 )
 import flask
 
+REAL_KEY = '9f4yZIjq'
+REAL_VALUE = 'CsyGlIE0'
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -38,7 +41,7 @@ def sculptures():
 def admin():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
-        if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
+        if request.cookies[REAL_KEY] == REAL_VALUE:
             return render_template('admin.html', page='Administration')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
@@ -51,7 +54,7 @@ def login():
 @app.route('/login/authenticate')
 def authenticate():
     try:
-        if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
+        if request.cookies[REAL_KEY] == REAL_VALUE:
             return redirect(url_for('admin'))
     except KeyError:
         pass
