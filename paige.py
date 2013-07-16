@@ -14,7 +14,7 @@ def home():
 
 @app.route('/resume')
 def resume():
-    return render_template('paige_resume.htm', page='RESUME')
+    return render_template('resume.html', page='RESUME')
 
 @app.route('/contact')
 def contact():
