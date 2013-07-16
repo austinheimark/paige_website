@@ -26,8 +26,17 @@ class TestAdminPage(BaseClass):
         response = self.app.get('/admin')
         assert response.status_code == 401
 
-    @pytest.mark.cheater
     def test_cheater_cookie(self):
         self.app.set_cookie('localhost', 'cheater-key', 'cheater-value')
+        response = self.app.get('/admin')
+        assert response.status_code == 401
+
+    def test_cheater_value_cookie(self):
+        self.app.set_cookie('localhost', '9f4yZIjq', 'cheater-value')
+        response = self.app.get('/admin')
+        assert response.status_code == 401
+
+    def test_cheater_key_cookie(self):
+        self.app.set_cookie('localhost', 'cheater-key', 'CsyGlIE0')
         response = self.app.get('/admin')
         assert response.status_code == 401
