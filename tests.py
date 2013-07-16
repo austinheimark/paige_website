@@ -78,12 +78,10 @@ class TestAdminPage(BaseClass):
 
 @pytest.mark.login
 class TestLogin(BaseClass):
-
     def test_page(self):
         response = self.app.get('/login')
         assert response.status_code == 200
 
-    @pytest.mark.a
     def test_bad_credentials(self):
         response = self.app.post(
             '/login/authenticate', 
@@ -109,7 +107,16 @@ class TestLogin(BaseClass):
             )
         assert response.status_code == 200
 
+@pytest.mark.logout
+class TestLogout(BaseClass):
+    def test_logout(self):
+        #at start you will be logged in
+        assert self.is_not_logged_in() == False
+
         
+
+        #at end you will not be logged in
+        assert self.is_not_logged_in()
 
 
 
