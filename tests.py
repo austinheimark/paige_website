@@ -68,4 +68,14 @@ class TestLogin(BaseClass):
         response = self.app.get('/login')
         assert response.status_code == 200
 
+    def test_login_bad_credentials(self):
+        self.app.set_cookie('localhost', 'cheater-key', 'cheater-value')
+        response = self.app.get('/login/authenticate')
+        assert response.status_code == 401
+
+
+
+
+
+
 
