@@ -80,6 +80,7 @@ class TestLogin(BaseClass):
         response = self.app.get('/login')
         assert response.status_code == 200
 
+    @pytest.mark.a
     def test_bad_credentials(self):
         response = self.app.post(
             '/login/authenticate', 
@@ -100,12 +101,12 @@ class TestLogin(BaseClass):
             '/login/authenticate',
             data={
                 'password':'cobblestone'
-            }
-        )
-        assert response.status_code == 302
+                },
+            follow_redirects=True
+            )
+        assert response.status_code == 200
 
-
-
+        
 
 
 
