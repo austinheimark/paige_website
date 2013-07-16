@@ -113,8 +113,6 @@ class TestLogout(BaseClass):
         #at start you will be logged in
         assert self.is_not_logged_in() == False
 
-        
-
         #at end you will not be logged in
         assert self.is_not_logged_in()
 
