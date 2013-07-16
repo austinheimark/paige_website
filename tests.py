@@ -4,10 +4,13 @@ import flask
 from paige import (
     app,
     REAL_KEY,
-    REAL_VALUE
+    REAL_VALUE,
+    VALID_PASSWORD,
+
     )
 import paige
 
+INCORRECT_RESPONSE = 'incorrect'
 
 class BaseClass(unittest.TestCase):
     def setUp(self):
@@ -59,17 +62,17 @@ class TestAdminPage(BaseClass):
         assert response.status_code == 401
 
     def test_cheater_cookie(self):
-        self.app.set_cookie('localhost', 'cheater-key', 'cheater-value')
+        self.app.set_cookie('localhost', INCORRECT_RESPONSE, INCORRECT_RESPONSE)
         response = self.app.get('/admin')
         assert response.status_code == 401
 
     def test_cheater_value_cookie(self):
-        self.app.set_cookie('localhost', REAL_KEY, 'cheater-value')
+        self.app.set_cookie('localhost', REAL_KEY, INCORRECT_RESPONSE)
         response = self.app.get('/admin')
         assert response.status_code == 401
 
     def test_cheater_key_cookie(self):
-        self.app.set_cookie('localhost', 'cheater-key', REAL_VALUE)
+        self.app.set_cookie('localhost', INCORRECT_RESPONSE, REAL_VALUE)
         response = self.app.get('/admin')
         assert response.status_code == 401
 
@@ -100,7 +103,7 @@ class TestLogin(BaseClass):
         response = self.app.post(
             '/login/authenticate',
             data={
-                'password':'cobblestone'
+                'password':VALID_PASSWORD
                 },
             follow_redirects=True
             )
