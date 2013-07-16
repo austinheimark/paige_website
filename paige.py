@@ -47,6 +47,9 @@ def admin():
 def unauthorized_page(error):
     return render_template('unauthorized.html'), 401
 
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('not_found.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
