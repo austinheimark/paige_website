@@ -96,9 +96,11 @@ class TestLogin(BaseClass):
         assert self.is_not_logged_in()
 
     def test_valid_credentials(self):
-        response = self.app.get(
-            '/login/authenticate'
-
+        response = self.app.post(
+            '/login/authenticate',
+            data={
+                'password':'cobblestone'
+            }
         )
         assert response.status_code == 302
 
