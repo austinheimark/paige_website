@@ -44,7 +44,7 @@ def admin():
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
-def unauthorized_page():
+def unauthorized_page(error):
     return render_template('unauthorized.html'), 401
 
 
