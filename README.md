@@ -1,1 +1,5 @@
--Website for my sister, backend in flask
+-Website to help my sister display her personal artwork
+-Backend is written in flask
+-Frontend uses twitter bootstrap
+-Deployed on heroku
+-Written on a Mac
