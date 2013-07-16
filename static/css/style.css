@@ -30,3 +30,7 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.unauthorized {
+	text-align: center;
+}
