@@ -31,6 +31,7 @@ body {
 	margin-right: auto;
 }
 
-.unauthorized {
+.errorhandlers {
 	text-align: center;
+	padding-top: 100px;
 }
