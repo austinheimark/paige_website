@@ -42,6 +42,7 @@ def admin():
         pass
     abort(401)
 
+#is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401):
 def unauthorized_page():
     return render_template('unauthorized.html'), 401
