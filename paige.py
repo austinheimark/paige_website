@@ -3,7 +3,8 @@ from flask import (
     render_template,
     request,
     abort,
-    url_for
+    url_for,
+    redirect
 )
 import flask
 
@@ -51,7 +52,10 @@ def login():
 def authenticate():
     try:
         if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
-            return redirect(url)
+            return redirect(url_for('admin'))
+    except KeyError:
+        pass
+    abort(401)
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
