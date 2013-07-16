@@ -66,6 +66,6 @@ class TestAdminPage(BaseClass):
 class TestLogin(BaseClass):
     def test_login_page(self):
         response = self.app.get('/login')
-        assert response.status_code == 401
+        assert response.status_code == 200
 
 
