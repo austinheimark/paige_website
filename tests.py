@@ -1,8 +1,13 @@
 import unittest
 import pytest
 import flask
-from paige import app
+from paige import (
+    app,
+    REAL_KEY,
+    REAL_VALUE
+    )
 import paige
+
 
 class BaseClass(unittest.TestCase):
     def setUp(self):
@@ -44,7 +49,7 @@ class TestFunctionalGetRequests(BaseClass):
 @pytest.mark.admin
 class TestAdminPage(BaseClass):
     def test_logged_in(self):   
-        self.app.set_cookie('localhost', '9f4yZIjq', 'CsyGlIE0')
+        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
         response = self.app.get('/admin')
         assert response.status_code == 200
 
@@ -59,23 +64,23 @@ class TestAdminPage(BaseClass):
         assert response.status_code == 401
 
     def test_cheater_value_cookie(self):
-        self.app.set_cookie('localhost', '9f4yZIjq', 'cheater-value')
+        self.app.set_cookie('localhost', REAL_KEY, 'cheater-value')
         response = self.app.get('/admin')
         assert response.status_code == 401
 
     def test_cheater_key_cookie(self):
-        self.app.set_cookie('localhost', 'cheater-key', 'CsyGlIE0')
+        self.app.set_cookie('localhost', 'cheater-key', REAL_VALUE)
         response = self.app.get('/admin')
         assert response.status_code == 401
 
 @pytest.mark.login
 class TestLogin(BaseClass):
 
-    def test_login_page(self):
+    def test_page(self):
         response = self.app.get('/login')
         assert response.status_code == 200
 
-    def test_login_bad_credentials(self):
+    def test_bad_credentials(self):
         response = self.app.post(
             '/login/authenticate', 
             data={
@@ -85,12 +90,12 @@ class TestLogin(BaseClass):
         assert response.status_code == 401
         assert self.is_not_logged_in()
 
-    def test_no_password(self):
+    def test_no_credentials(self):
         response = self.app.post('/login/authenticate')
         assert response.status_code == 401
         assert self.is_not_logged_in()
 
-    def test_login_valid_credentials(self):
+    def test_valid_credentials(self):
         response = self.app.get(
             '/login/authenticate'
 
