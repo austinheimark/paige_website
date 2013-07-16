@@ -10,6 +10,7 @@ import flask
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
+VALID_PASSWORD = 'cobblestone'
 
 app = Flask(__name__)
 
@@ -54,8 +55,10 @@ def login():
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
     try:
-        if request.cookies[REAL_KEY] == REAL_VALUE:
-            return redirect(url_for('admin'))
+        if request.form['password'] == VALID_PASSWORD:
+            response = redirect(url_for('admin'))
+            response.set_cookie(REAL_KEY, REAL_VALUE)
+            return response
     except KeyError:
         pass
     abort(401)
