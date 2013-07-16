@@ -9,9 +9,30 @@ class BaseClass(unittest.TestCase):
         paige.app.config['TESTING'] = True
         self.app = app.test_client()
 
+@pytest.mark.validpages
 class TestFunctionalGetRequests(BaseClass):
     def test_home_page(self):
         response = self.app.get('/')
+        assert response.status_code == 200
+
+    def test_contact_page(self):
+        response = self.app.get('/contact')
+        assert response.status_code == 200
+
+    def test_drawings_page(self):
+        response = self.app.get('/drawings')
+        assert response.status_code == 200
+
+    def test_resume_page(self):
+        response = self.app.get('/resume')
+        assert response.status_code == 200
+
+    def test_paintings_page(self):
+        response = self.app.get('/paintings')
+        assert response.status_code == 200
+
+    def test_sculptures_page(self):
+        response = self.app.get('/sculptures')
         assert response.status_code == 200
 
 @pytest.mark.admin
@@ -40,3 +61,5 @@ class TestAdminPage(BaseClass):
         self.app.set_cookie('localhost', 'cheater-key', 'CsyGlIE0')
         response = self.app.get('/admin')
         assert response.status_code == 401
+
+
