@@ -51,7 +51,7 @@ def admin():
 def login():
     return render_template('login.html', page='Login')
 
-@app.route('/login/authenticate')
+@app.route('/login/authenticate', methods=['POST'])
 def authenticate():
     try:
         if request.cookies[REAL_KEY] == REAL_VALUE:
