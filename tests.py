@@ -73,8 +73,10 @@ class TestLogin(BaseClass):
         response = self.app.get('/login/authenticate')
         assert response.status_code == 401
 
-
-
+    def test_login_valid_credentials(self):
+        self.app.set_cookie('localhost', '9f4yZIjq', 'CsyGlIE0')
+        response = self.app.get('/login/authenticate')
+        assert response.status_code == 302
 
 
 
