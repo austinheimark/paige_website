@@ -16,37 +16,37 @@ def home():
 
 @app.route('/resume')
 def resume():
-    return render_template('resume.html', page='RESUME')
+    return render_template('resume.html', page='Resume')
 
 @app.route('/contact')
 def contact():
-    return render_template('contact.html', page='CONTACT')
+    return render_template('contact.html', page='Contact')
 
 @app.route('/drawings')
 def drawings():
-    return render_template('drawings.html', page='DRAWINGS')
+    return render_template('drawings.html', page='Drawings')
 
 @app.route('/paintings')
 def paintings():
-    return render_template('paintings.html', page='PAINTINGS')
+    return render_template('paintings.html', page='Paintings')
 
 @app.route('/sculptures')
 def sculptures():
-    return render_template('sculptures.html', page='SCULPTURES')
+    return render_template('sculptures.html', page='Sculptures')
 
 @app.route('/admin')
 def admin():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
         if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
-            return render_template('admin.html', page='ADMIN')
+            return render_template('admin.html', page='Administration')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
     abort(401)
 
 @app.route('/login')
 def login():
-    return render_template('login.html', page='LOGIN')
+    return render_template('login.html', page='Login')
 
 @app.route('/login/authenticate')
 def authenticate():
