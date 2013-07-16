@@ -9,6 +9,12 @@ class BaseClass(unittest.TestCase):
         paige.app.config['TESTING'] = True
         self.app = app.test_client()
 
+    def is_not_logged_in(self):
+        if not self.app.cookie_jar._cookies:
+            return True
+        else:
+            return False
+
 @pytest.mark.validpages
 class TestFunctionalGetRequests(BaseClass):
     def test_home_page(self):
@@ -43,7 +49,7 @@ class TestAdminPage(BaseClass):
         assert response.status_code == 200
 
     def test_not_logged_in(self):
-        assert not self.app.cookie_jar._cookies
+        assert self.is_not_logged_in()
         response = self.app.get('/admin')
         assert response.status_code == 401
 
@@ -64,19 +70,34 @@ class TestAdminPage(BaseClass):
 
 @pytest.mark.login
 class TestLogin(BaseClass):
+
     def test_login_page(self):
         response = self.app.get('/login')
         assert response.status_code == 200
 
     def test_login_bad_credentials(self):
-        self.app.set_cookie('localhost', 'cheater-key', 'cheater-value')
-        response = self.app.get('/login/authenticate')
+        response = self.app.post(
+            '/login/authenticate', 
+            data={
+                'password':'incorrect'
+            }
+        )
         assert response.status_code == 401
+        assert self.is_not_logged_in()
+
+    def test_no_password(self):
+        response = self.app.post('/login/authenticate')
+        assert response.status_code == 401
+        assert self.is_not_logged_in()
 
     def test_login_valid_credentials(self):
-        self.app.set_cookie('localhost', '9f4yZIjq', 'CsyGlIE0')
-        response = self.app.get('/login/authenticate')
+        response = self.app.get(
+            '/login/authenticate'
+
+        )
         assert response.status_code == 302
+
+
 
 
 
