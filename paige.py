@@ -63,6 +63,10 @@ def authenticate():
         pass
     abort(401)
 
+@app.route('/logout')
+def logout():
+    
+
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
