@@ -38,7 +38,7 @@ def admin():
     try:
         if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
             return render_template('admin.html', page='ADMIN')
-    except KeyError:
+    except KeyError:    #error raised when a dict object is requested and no key is found
         pass
     abort(401)
 
