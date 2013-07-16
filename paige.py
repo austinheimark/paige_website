@@ -2,7 +2,8 @@ from flask import (
     Flask, 
     render_template,
     request,
-    abort
+    abort,
+    url_for
 )
 import flask
 
@@ -45,6 +46,12 @@ def admin():
 @app.route('/login')
 def login():
     return render_template('login.html', page='LOGIN')
+
+@app.route('/login/authenticate')
+def authenticate():
+    try:
+        if request.cookies['9f4yZIjq'] == 'CsyGlIE0':
+            return redirect(url)
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
