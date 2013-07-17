@@ -2,17 +2,6 @@
 {% block content %}
 
     <div class="container span4">
-
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class=flashes>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
       <form class="form-signin" method="post" action="/login/authenticate">
         <h2 class="form-signin-heading"></h2>
         <input name="password" type="password" class="input-block-level" placeholder="Password">
