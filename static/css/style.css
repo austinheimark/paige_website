@@ -35,3 +35,7 @@ body {
 	text-align: center;
 	padding-top: 100px;
 }
+
+#logout-button {
+	padding-left: 200px;
+}
