@@ -4,7 +4,8 @@ from flask import (
     request,
     abort,
     url_for,
-    redirect
+    redirect,
+    flash
 )
 import flask
 
@@ -60,9 +61,9 @@ def authenticate():
             response.set_cookie(REAL_KEY, REAL_VALUE)
             return response
     except KeyError:
-        error = 'Incorrect password'
-        return render_template('login.html', error=error)   #redirect back to the login page with an error message saying wrong password
-
+        pass
+    flash('Incorrect password. Try again!')
+    return redirect(url_for('login'))
 
 @app.route('/logout', methods=['POST'])
 def logout():
