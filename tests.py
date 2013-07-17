@@ -109,9 +109,9 @@ class TestLogin(BaseClass):
 
 @pytest.mark.logout
 class TestLogout(BaseClass):
-    def test_logout(self):
+    def test_logout_when_logged_in(self):
         #at start you will be logged in
-        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
+        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE, max_age=5)
         
         #check to make sure you are logged in
         assert self.is_not_logged_in() == False
