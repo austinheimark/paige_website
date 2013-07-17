@@ -113,10 +113,13 @@ class TestLogout(BaseClass):
         #at start you will be logged in
         self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
         
+        #check to make sure you are logged in
         assert self.is_not_logged_in() == False
+
+        #then get the response from the logout function, which will clear the cookies
         response = self.app.post('/logout')
         
-        #at end you will not be logged in
+        #at end you will not be logged in (logged out) because the cookies will no longer be present
         assert self.is_not_logged_in()
 
 
