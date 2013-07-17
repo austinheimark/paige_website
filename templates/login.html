@@ -3,10 +3,15 @@
 
     <div class="container span4">
 
-      {% if error %}
-    	<p class=error><strong>Error:</strong> {{ error }}
-	  {% endif %}
-
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 
       <form class="form-signin" method="post" action="/login/authenticate">
         <h2 class="form-signin-heading"></h2>
