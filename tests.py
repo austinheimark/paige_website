@@ -109,7 +109,7 @@ class TestLogin(BaseClass):
 
 @pytest.mark.logout
 class TestLogout(BaseClass):
-    def test_logout(self):
+    def test_logout_logged_in(self):
         #at start you will be logged in
         self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
         
@@ -119,5 +119,12 @@ class TestLogout(BaseClass):
         #at end you will not be logged in
         assert not self.is_logged_in()
 
+    def test_logout_not_logged_in(self):
+        assert not self.is_logged_in()
 
+        response = self.app.post('/logout')
+        
+        assert not self.is_logged_in()
+
+        
 
