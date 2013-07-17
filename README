@@ -1,5 +1,5 @@
--Website to help my sister display her personal artwork
--Backend is written in flask
--Frontend uses twitter bootstrap
--Deployed on heroku
+-Website to help my sister display her artwork
+-Backend is written in Python using the Flask micro framework
+-Frontend uses the Twitter Bootstrap
+-Deployed on Heroku
 -Written on a Mac
