@@ -40,7 +40,11 @@
               </li>
               <li><a href="{{ url_for('resume') }}">Resume</a></li>
               <li><a href="{{ url_for('contact') }}">Contact</a></li>
-              <li><a href="{{ url_for('login') }}">Login</a></li>
+              {% if logged_in %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+              {% else %}
+                <li><a href="{{ url_for('login') }}">Logout</a></li>
+              {% endif %}
             </ul>
           </div>
         </div>
