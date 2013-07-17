@@ -38,7 +38,10 @@ body {
 
 #logout-button {
 	float: right;
-}.footer-mods {
-	padding-top: 10px;
+}
+
+.footer-mods {
 	text-align: center;
+	font-size: 11px;
+	padding-top: 10px;
 }
