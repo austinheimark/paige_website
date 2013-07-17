@@ -112,12 +112,10 @@ class TestLogout(BaseClass):
     def test_logout(self):
         #at start you will be logged in
         self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
+        
         assert self.is_not_logged_in() == False
-
-        response = self.app.post(
-            '/logout'
-            )
-
+        response = self.app.post('/logout')
+        
         #at end you will not be logged in
         assert self.is_not_logged_in()
 
