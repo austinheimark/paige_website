@@ -60,8 +60,9 @@ def authenticate():
             response.set_cookie(REAL_KEY, REAL_VALUE)
             return response
     except KeyError:
-        pass
-    return redirect(url_for('login'))   #redirect back to the login page with an error message saying wrong password
+        error = 'Incorrect password'
+        return render_template('login.html', error=error)   #redirect back to the login page with an error message saying wrong password
+
 
 @app.route('/logout', methods=['POST'])
 def logout():
