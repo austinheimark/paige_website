@@ -23,6 +23,10 @@ class BaseClass(unittest.TestCase):
         else:
             return False
 
+    def login(self):
+        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
+
+
 @pytest.mark.validpages
 class TestFunctionalGetRequests(BaseClass):
     def test_home_page(self):
@@ -52,7 +56,7 @@ class TestFunctionalGetRequests(BaseClass):
 @pytest.mark.admin
 class TestAdminPage(BaseClass):
     def test_logged_in(self):   
-        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
+        self.login()
         response = self.app.get('/admin')
         assert response.status_code == 200
 
@@ -108,10 +112,7 @@ class TestLogin(BaseClass):
 class TestLogout(BaseClass):
     def test_logout_when_logged_in(self):
         #at start you will be logged in
-        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE, max_age=5)
-        
-        #check to make sure you are logged in
-        assert self.is_not_logged_in() == False
+        self.login()
 
         #then get the response from the logout function, which will clear the cookies
         response = self.app.post('/logout')
@@ -126,6 +127,7 @@ class TestLogout(BaseClass):
 
         response = self.app.post('/logout')
 
+        #should still not be logged in
         assert self.is_not_logged_in
 
 
