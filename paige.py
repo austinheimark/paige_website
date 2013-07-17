@@ -10,7 +10,7 @@ import flask
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
-VALID_PASSWORD = 'cobblestone'
+VALID_PASSWORD = 'blue willow'
 
 app = Flask(__name__)
 
