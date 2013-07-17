@@ -3,6 +3,11 @@
 
     <div class="container span4">
 
+      {% if error %}
+    	<p class=error><strong>Error:</strong> {{ error }}
+	  {% endif %}
+
+
       <form class="form-signin" method="post" action="/login/authenticate">
         <h2 class="form-signin-heading"></h2>
         <input name="password" type="password" class="input-block-level" placeholder="Password">
