@@ -88,9 +88,6 @@ class TestLogin(BaseClass):
             data={
                 'password':'incorrect'
             }
-        )
-        assert response.status_code == 401
-        assert self.is_not_logged_in()
 
     def test_no_credentials(self):
         response = self.app.post('/login/authenticate')
@@ -121,6 +118,15 @@ class TestLogout(BaseClass):
         
         #at end you will not be logged in (logged out) because the cookies will no longer be present
         assert self.is_not_logged_in()
+
+    @pytest.mark.a
+    def test_logout_not_logged_in(self):
+        #make sure not logged in
+        assert self.is_not_logged_in
+
+        response = self.app.post('/logout')
+
+        assert self.is_not_logged_in
 
 
 
