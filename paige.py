@@ -63,9 +63,10 @@ def authenticate():
         pass
     abort(401)
 
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
-
+    #must delete the cookie
+    request.cookies.pop(REAL_KEY)
     return redirect(url_for('home'))
 
 #is returned when user tries to access a page that they are unauthorized to access
