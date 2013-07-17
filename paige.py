@@ -4,7 +4,8 @@ from flask import (
     request,
     abort,
     url_for,
-    redirect
+    redirect,
+    flash
     )
 
 import flask
@@ -14,6 +15,7 @@ REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'blue willow'
 
 app = Flask(__name__)
+app.secret_key = 'something'
 
 @app.route('/')
 def home():
@@ -62,6 +64,7 @@ def authenticate():
             return response
     except KeyError:
         pass
+    flash('Wrong password, try again!')
     return redirect(url_for('login'))
 
 @app.route('/logout', methods=['POST'])
