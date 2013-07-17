@@ -17,10 +17,10 @@ class BaseClass(unittest.TestCase):
         paige.app.config['TESTING'] = True
         self.app = app.test_client()
 
-    def is_not_logged_in(self):
-        if not self.app.cookie_jar._cookies:
-            return True
-        else:
+    def is_logged_in(self):
+        try:
+            return self.app.cookie_jar._cookies['localhost.local']['/'][REAL_KEY].value == REAL_VALUE
+        except KeyError:
             return False
 
 @pytest.mark.validpages
@@ -57,7 +57,7 @@ class TestAdminPage(BaseClass):
         assert response.status_code == 200
 
     def test_not_logged_in(self):
-        assert self.is_not_logged_in()
+        assert not self.is_logged_in()
         response = self.app.get('/admin')
         assert response.status_code == 401
 
@@ -90,12 +90,12 @@ class TestLogin(BaseClass):
             }
         )
         assert response.status_code == 401
-        assert self.is_not_logged_in()
+        assert not self.is_logged_in()
 
     def test_no_credentials(self):
         response = self.app.post('/login/authenticate')
         assert response.status_code == 401
-        assert self.is_not_logged_in()
+        assert not self.is_logged_in()
 
     def test_valid_credentials(self):
         response = self.app.post(
@@ -113,11 +113,11 @@ class TestLogout(BaseClass):
         #at start you will be logged in
         self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
         
-        assert self.is_not_logged_in() == False
+        assert self.is_logged_in()
         response = self.app.post('/logout')
         
         #at end you will not be logged in
-        assert self.is_not_logged_in()
+        assert not self.is_logged_in()
 
 
 
