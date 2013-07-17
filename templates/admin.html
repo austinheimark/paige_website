@@ -2,7 +2,9 @@
 {% block content %}
 
 	<div class="btn-group" id="logout-button">
-  		<button class="btn">Logout</button>
+  		<form method="post" action="/logout">
+			<button class="btn">Logout</button>
+		</form>
 	</div>
 
 {% endblock %}}
