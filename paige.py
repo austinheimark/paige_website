@@ -4,9 +4,9 @@ from flask import (
     request,
     abort,
     url_for,
-    redirect,
-    flash
-)
+    redirect
+    )
+
 import flask
 
 REAL_KEY = '9f4yZIjq'
@@ -62,7 +62,6 @@ def authenticate():
             return response
     except KeyError:
         pass
-    flash('Incorrect password. Try again!')
     return redirect(url_for('login'))
 
 @app.route('/logout', methods=['POST'])
