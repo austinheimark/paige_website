@@ -46,22 +46,22 @@
       </div>
     </div>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul class="flash-mods">
-          {% for message in messages %}
-            <p>{{ message }}</p>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-
-
     <div class="container">
       <h1>{{page}}</h1>
       {% block content %}
       {% endblock %}
     </div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <p class="flash-mods"><strong>{{ message }}</strong></p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
 
     <!-- footer -->
     <div class="footer footer-mods">
