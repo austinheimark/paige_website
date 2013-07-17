@@ -55,18 +55,19 @@ def login():
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
     try:
-        if request.form['password'] == VALID_PASSWORD:
+        if request.form['password'] == VALID_PASSWORD:      #if correct password, redirect to admin page and set the cookie
             response = redirect(url_for('admin'))
             response.set_cookie(REAL_KEY, REAL_VALUE)
             return response
     except KeyError:
         pass
-    abort(401)
+    return redirect(url_for('login'))   #redirect back to the login page with an error message saying wrong password
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    #must delete the cookie
+    #logout redirects to the home page
     response = redirect(url_for('home'))
+    #reset the cookie with the wrong value and an immediate expiration date --> hence logged out
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
 
