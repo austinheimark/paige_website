@@ -66,8 +66,9 @@ def authenticate():
 @app.route('/logout', methods=['POST'])
 def logout():
     #must delete the cookie
-    #request.cookies.pop(REAL_KEY)
-    return redirect(url_for('home'))
+    response = redirect(url_for('home'))
+    response.set_cookie(REAL_KEY, 'wrong', expires=0)
+    return response
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
