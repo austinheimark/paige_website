@@ -89,12 +89,12 @@ class TestLogin(BaseClass):
                 'password':'incorrect'
             }
         )
-        assert response.status_code == 401
+        assert response.status_code == 302
         assert not self.is_logged_in()
 
     def test_no_credentials(self):
         response = self.app.post('/login/authenticate')
-        assert response.status_code == 401
+        assert response.status_code == 302
         assert not self.is_logged_in()
 
     def test_valid_credentials(self):
@@ -126,5 +126,5 @@ class TestLogout(BaseClass):
         
         assert not self.is_logged_in()
 
-        
+
 
