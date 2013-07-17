@@ -30,3 +30,18 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.errorhandlers {
+	text-align: center;
+	padding-top: 100px;
+}
+
+#logout-button {
+	float: right;
+}
+
+.footer-mods {
+	text-align: center;
+	font-size: 11px;
+	padding-top: 10px;
+}
