@@ -40,7 +40,6 @@
               </li>
               <li><a href="{{ url_for('resume') }}">Resume</a></li>
               <li><a href="{{ url_for('contact') }}">Contact</a></li>
-              <li><a href="{{ url_for('login') }}">Login</a></li>
             </ul>
           </div>
         </div>
@@ -53,11 +52,21 @@
       {% endblock %}
     </div>
 
-      <div id="footer">
-        <div class="container footer-mods">
-          <p>© Paige Heimark 2013</p>
-        </div>
-      </div>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <p class="flash-mods"><strong>{{ message }}</strong></p>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+
+    <!-- footer -->
+    <div class="footer footer-mods">
+      <p>© Paige Heimark 2013</p>
+    </div>
 
 	</body>
 </html>

@@ -4,15 +4,18 @@ from flask import (
     request,
     abort,
     url_for,
-    redirect
-)
+    redirect,
+    flash
+    )
+
 import flask
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
-VALID_PASSWORD = 'cobblestone'
+VALID_PASSWORD = 'blue willow'
 
 app = Flask(__name__)
+app.secret_key = 'something'
 
 @app.route('/')
 def home():
@@ -55,19 +58,22 @@ def login():
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
     try:
-        if request.form['password'] == VALID_PASSWORD:
+        if request.form['password'] == VALID_PASSWORD:      #if correct password, redirect to admin page and set the cookie
             response = redirect(url_for('admin'))
             response.set_cookie(REAL_KEY, REAL_VALUE)
             return response
     except KeyError:
         pass
-    abort(401)
+    flash('Wrong password, try again!')
+    return redirect(url_for('login'))
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    #must delete the cookie
-    #request.cookies.pop(REAL_KEY)
-    return redirect(url_for('home'))
+    #logout redirects to the home page
+    response = redirect(url_for('home'))
+    #reset the cookie with the wrong value and an immediate expiration date --> hence logged out
+    response.set_cookie(REAL_KEY, 'wrong', expires=0)
+    return response
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)

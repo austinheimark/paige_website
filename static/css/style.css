@@ -36,7 +36,18 @@ body {
 	padding-top: 100px;
 }
 
-.footer-mods {
-	padding-top: 10px;
-	text-align: center;
+#logout-button {
+	float: right;
 }
+
+.footer-mods {
+	text-align: center;
+	font-size: 11px;
+	padding-top: 10px;
+}
+
+.flash-mods {
+	color: red;
+}
+
+
