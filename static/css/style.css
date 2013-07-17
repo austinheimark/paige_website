@@ -37,9 +37,8 @@ body {
 }
 
 #logout-button {
-	padding-left: 200px;
-}
-.footer-mods {
+	float: right;
+}.footer-mods {
 	padding-top: 10px;
 	text-align: center;
 }
