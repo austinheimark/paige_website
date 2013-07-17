@@ -36,6 +36,9 @@ body {
 	padding-top: 100px;
 }
 
+#logout-button {
+	padding-left: 200px;
+}
 .footer-mods {
 	padding-top: 10px;
 	text-align: center;
