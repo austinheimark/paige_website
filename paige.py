@@ -57,7 +57,7 @@ def login():
 def authenticate():
     try:
         if request.form['password'] == VALID_PASSWORD:      #if correct password, redirect to admin page and set the cookie
-            response = redirect(url_for('admin'))
+            response = redirect(url_for('admin'), logged_in=True)
             response.set_cookie(REAL_KEY, REAL_VALUE)
             return response
     except KeyError:
@@ -67,7 +67,7 @@ def authenticate():
 @app.route('/logout', methods=['POST'])
 def logout():
     #logout redirects to the home page
-    response = redirect(url_for('home'))
+    response = redirect(url_for('home'), logged_in=False)
     #reset the cookie with the wrong value and an immediate expiration date --> hence logged out
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
