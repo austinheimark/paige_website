@@ -79,7 +79,7 @@ def logout():
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
 
-@app.route('/admin/new_image')
+@app.route('/new_image')
 def new_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
@@ -89,7 +89,7 @@ def new_image():
         pass
     abort(401)   
 
-@app.route('/admin/delete_image')
+@app.route('/delete_image')
 def delete_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
