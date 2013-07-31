@@ -99,6 +99,11 @@ def delete_image():
         pass
     abort(401)       
 
+#accepts form information and adds the certain image to the correct location
+@app.route('/image_addition', methods=['POST'])
+def image_addition():
+
+
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
