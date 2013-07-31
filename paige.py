@@ -16,6 +16,11 @@ VALID_PASSWORD = 'password'
 
 app = Flask(__name__)
 app.secret_key = 'something'
+
+#returns true if the user is logged in
+def verify_login():
+    return request.cookies[REAL_KEY] == REAL_VALUE
+
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -44,7 +49,7 @@ def sculptures():
 def admin():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
-        if request.cookies[REAL_KEY] == REAL_VALUE:
+        if self.verify_login():
             return render_template('admin.html', page='Administration')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
@@ -78,7 +83,7 @@ def logout():
 def new_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
-        if request.cookies[REAL_KEY] == REAL_VALUE:
+        if self.verify_login():
             return render_template('new_image.html', page='New Image')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
