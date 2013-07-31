@@ -89,7 +89,7 @@ def delete_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
         if request.cookies[REAL_KEY] == REAL_VALUE:
-            return render_template('delete_image.html', page='New Image')
+            return render_template('delete_image.html', page='Delete Image')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
     abort(401)       
