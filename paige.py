@@ -15,7 +15,7 @@ REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'password'
 
 app = Flask(__name__)
-
+app.secret_key = 'something'
 @app.route('/')
 def home():
     return render_template('home.html')
