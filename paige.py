@@ -74,6 +74,10 @@ def logout():
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
 
+@app.route('/admin/new_image', methods=['POST'])
+def new-image():
+    return render_template('new_image.html', page="New Image")
+
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
