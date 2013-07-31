@@ -76,7 +76,13 @@ def logout():
 
 @app.route('/admin/new_image', methods=['POST'])
 def new_image():
-    return render_template('new_image.html', page="New Image")
+    #if the cookie is valid, then the admin page will be shown, otherwise an abort error
+    try:
+        if request.cookies[REAL_KEY] == REAL_VALUE:
+            return render_template('new_image.html', page='New Image')
+    except KeyError:    #error raised when a dict object is requested and no key is found
+        pass
+    abort(401)    
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
