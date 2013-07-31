@@ -74,7 +74,7 @@ def logout():
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
 
-@app.route('/admin/new_image', methods=['POST'])
+@app.route('/admin/new_image')
 def new_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
