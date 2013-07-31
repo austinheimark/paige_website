@@ -49,7 +49,7 @@ def sculptures():
 def admin():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
-        if self.verify_login():
+        if verify_login():
             return render_template('admin.html', page='Administration')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
@@ -83,7 +83,7 @@ def logout():
 def new_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     try:
-        if self.verify_login():
+        if verify_login():
             return render_template('new_image.html', page='New Image')
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
