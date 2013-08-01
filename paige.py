@@ -79,6 +79,7 @@ def logout():
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
 
+#page where you Paige can add new images, will fill out form with all the options
 @app.route('/new_image')
 def new_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
@@ -89,6 +90,7 @@ def new_image():
         pass
     abort(401)   
 
+#page where Paige can delete images
 @app.route('/delete_image')
 def delete_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
@@ -100,8 +102,8 @@ def delete_image():
     abort(401)       
 
 #accepts form information and adds the certain image to the correct location
-@app.route('/image_addition', methods=['POST'])
-def image_addition():
+#@app.route('/image_addition', methods=['POST'])
+#def image_addition():
 
 
 #is returned when user tries to access a page that they are unauthorized to access
@@ -109,6 +111,7 @@ def image_addition():
 def unauthorized_page(error):
     return render_template('unauthorized.html'), 401
 
+#404 - not found
 @app.errorhandler(404)
 def not_found(error):
     return render_template('not_found.html'), 404
