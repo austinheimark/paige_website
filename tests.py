@@ -54,7 +54,7 @@ class TestFunctionalGetRequests(BaseClass):
         assert response.status_code == 200
 
 @pytest.mark.admin
-class TestAdminPage(BaseClass):
+class TestAdminPages(BaseClass):
     def test_logged_in(self):   
         self.login()
         response = self.app.get('/admin')
@@ -79,6 +79,16 @@ class TestAdminPage(BaseClass):
         self.app.set_cookie('localhost', INCORRECT_RESPONSE, REAL_VALUE)
         response = self.app.get('/admin')
         assert response.status_code == 401
+
+    def test_new_image_page(self):
+        self.login()
+        response = self.app.get('/new_image')
+        assert response.status_code == 200
+
+    def test_delete_image_page(self):
+        self.login()
+        response = self.app.get('/delete_image')
+        assert response.status_code == 200
 
 @pytest.mark.login
 class TestLogin(BaseClass):
