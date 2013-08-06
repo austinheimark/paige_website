@@ -96,11 +96,24 @@ def upload_image():
     try:
         if verify_login():
             #test to ensure that every entry field has been entered
-            if (request.form['link'] and 
-                request.form['title'] and 
-                request.form['caption'] and 
-                request.form['type']):
+            # if (request.form['link'] and 
+            #     request.form['title'] and 
+            #     request.form['caption'] and 
+            #     request.form['type']):
 
+            wanted_keys = ['link', 'title', 'caption', 'type']
+
+            # for key in request.form.keys():
+            #     if key not in wanted_keys:
+            #         pass
+
+
+            for wanted in wanted_keys:
+                if wanted not in request.form.keys():
+                    flash('You forgot some entry fields!')
+                    response = redirect(url_for('new_image'))
+                    return response     
+                                   
                 #add the image to respective section of website now
 
                 flash('Image successfully uploaded!')
@@ -111,7 +124,7 @@ def upload_image():
                 response = redirect(url_for('new_image'))
                 return response
     except KeyError:
-        pass
+        raise Exception
     abort(401)
 
 
