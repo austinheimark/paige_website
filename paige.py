@@ -98,9 +98,8 @@ def upload_image():
         if (request.form['link'] and 
             request.form['title'] and 
             request.form['caption'] and 
-            #radio button...
-            request.form['']):
-
+            request.form['type']):
+                
             #add the image to respective section of website now
 
             flash('Image successfully uploaded!')
