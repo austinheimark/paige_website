@@ -93,7 +93,22 @@ def new_image():
 #accepts form from '/new_image'
 @app.route('/new_image/authenticate', methods=['POST'])
 def upload_image():
+    try:
+        #test to ensure that every entry field has been entered
+        if (request.form['flickr-link'] and 
+            request.form['image-title'] and 
+            request.form['image-caption'] and 
+            #radio button...
+            request.form['']):
 
+            #add the image to respective section of website now
+
+
+            return render_template('succesful_iamge_upload', page='Image Uploaded!')
+    except:
+        pass
+    flash('You forgot some entry fields!')
+    return redirect(url_for('new_image'))
 
 #page where Paige can delete images
 @app.route('/delete_image')
