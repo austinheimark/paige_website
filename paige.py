@@ -112,7 +112,7 @@ def upload_image():
                 return response
     except KeyError:
         pass
-    abort(404)
+    abort(401)
 
 
 #page where Paige can delete images
