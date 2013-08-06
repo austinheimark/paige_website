@@ -103,8 +103,8 @@ def upload_image():
 
             #add the image to respective section of website now
 
-
-            return render_template('admin.html', page='Image Uploaded. Good job!')
+            flash('Image successfully uploaded!')
+            return render_template('admin.html', page='Administration')
     except:
         pass
     flash('You forgot some entry fields!')
