@@ -13,9 +13,11 @@ import flask
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'password'
+DATABASE = 'tmp/paige_website.db'
 
 app = Flask(__name__)
 app.secret_key = 'something'
+app.config.from_object(__name__)
 
 #returns true if the user is logged in
 def verify_login():
