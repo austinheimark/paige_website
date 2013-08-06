@@ -174,7 +174,6 @@ class TestImageUpload(BaseTest):
                 'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg',
                 'caption':'picture of the stars'
                 },
-                follow_redirects = True
             )
         #deserves a redirect asking for more information
         assert response.status_code == 302
