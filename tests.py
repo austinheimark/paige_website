@@ -166,7 +166,6 @@ class TestImageUpload(BaseClass):
 
         #make sure no new images were added
 
-
     def test_partial_info(self):
         self.login()
         response = self.app.post(
@@ -180,7 +179,6 @@ class TestImageUpload(BaseClass):
         assert response.status_code == 302
 
         #make sure no new images added
-
 
     def test_valid_info(self):
         self.login()
