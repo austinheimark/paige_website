@@ -19,7 +19,10 @@ app.secret_key = 'something'
 
 #returns true if the user is logged in
 def verify_login():
-    return request.cookies[REAL_KEY] == REAL_VALUE
+    try:
+        return request.cookies[REAL_KEY] == REAL_VALUE
+    except KeyError:
+        return False
 
 @app.route('/')
 def home():
@@ -48,12 +51,11 @@ def sculptures():
 @app.route('/admin')
 def admin():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
-    try:
-        if verify_login():
-            return render_template('admin.html', page='Administration')
-    except KeyError:    #error raised when a dict object is requested and no key is found
-        pass
-    abort(401)
+    if not verify_login():
+        abort(401)    
+
+    return render_template('admin.html', page='Administration')
+
 
 @app.route('/login')
 def login():
@@ -82,70 +84,43 @@ def logout():
 #page where you Paige can add new images, will fill out form with all the options
 @app.route('/new_image')
 def new_image():
-    #if the cookie is valid, then the admin page will be shown, otherwise an abort error
-    try:
-        if verify_login():
-            return render_template('new_image.html', page='New Image')
-    except KeyError:    #error raised when a dict object is requested and no key is found
-        pass
-    abort(401)   
+    if not verify_login():
+        abort(401) 
 
-#accepts form from '/new_image'
+    return render_template('new_image.html', page='New Image')
+
+#accepts form from '/new_image', authenticates form data, then posts the new image
 @app.route('/new_image/authenticate', methods=['POST'])
 def upload_image():
-    try:
-        if verify_login():
-            #test to ensure that every entry field has been entered
-            # if (request.form['link'] and 
-            #     request.form['title'] and 
-            #     request.form['caption'] and 
-            #     request.form['type']):
+    if not verify_login():
+        abort(401)
 
-            wanted_keys = ['link', 'title', 'caption', 'type']
+    wanted_keys = ['link', 'title', 'caption', 'type']
 
-            # for key in request.form.keys():
-            #     if key not in wanted_keys:
-            #         pass
+    if not set(wanted_keys) <= set(request.form.keys()):
+        flash('You forgot some entry fields!')
+        response = redirect(url_for('new_image'))
+        return response 
 
-
-            for wanted in wanted_keys:
-                if wanted not in request.form.keys():
-                    flash('You forgot some entry fields!')
-                    response = redirect(url_for('new_image'))
-                    return response     
-                                   
-                #add the image to respective section of website now
-
-                flash('Image successfully uploaded!')
-                response = redirect(url_for('admin'))
-                return response
-            else:
-                flash('You forgot some entry fields!')
-                response = redirect(url_for('new_image'))
-                return response
-    except KeyError:
-        raise Exception
-    abort(401)
-
+    flash('Image successfully uploaded!')
+    response = redirect(url_for('admin'))
+    return response
 
 #page where Paige can delete images
 @app.route('/delete_image')
 def delete_image():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
-    try:
-        if verify_login():
-            return render_template('delete_image.html', page='Delete Image')
-    except KeyError:    #error raised when a dict object is requested and no key is found
-        pass
-    abort(401)       
-
+    if not verify_login():
+        abort(401)
+    
+    return render_template('delete_image.html', page='Delete Image')
 
 #is returned when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
     return render_template('unauthorized.html'), 401
 
-#404 - not found
+#not found error page
 @app.errorhandler(404)
 def not_found(error):
     return render_template('not_found.html'), 404
