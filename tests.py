@@ -156,7 +156,7 @@ class TestImageUpload(BaseClass):
         response = self.app.post(
             '/new_image/authenticate',
             data = {
-                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg'
+                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg',
                 'caption':'picture of the stars'
                 },
                 follow_redirects = True
@@ -170,9 +170,9 @@ class TestImageUpload(BaseClass):
         response = self.app.post(
             '/new_image/authenticate',
             data = {
-                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg'
-                'type':'drawings'
-                'caption':'picture of the stars'
+                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg',
+                'type':'drawings',
+                'caption':'picture of the stars',
                 'title':'The Stars'
                 },
                 follow_redirects = True
@@ -186,7 +186,7 @@ class TestImageUpload(BaseClass):
 @pytest.mark.delete_image
 class TestImageDeletion(BaseClass):
     def test_delete(self):
-
+        pass
 
 
 
