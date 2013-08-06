@@ -107,7 +107,7 @@ class TestLogin(BaseClass):
         assert not self.is_logged_in()
 
     def test_no_credentials(self):
-        response = self.app.post('/login/authenticate')
+        self.login()    
         assert response.status_code == 302
         assert not self.is_logged_in()
 
@@ -125,7 +125,7 @@ class TestLogin(BaseClass):
 class TestLogout(BaseClass):
     def test_logout_logged_in(self):
         #at start you will be logged in
-        self.app.set_cookie('localhost', REAL_KEY, REAL_VALUE)
+        self.login()
         
         assert self.is_logged_in()
         response = self.app.post('/logout')
@@ -145,6 +145,7 @@ class TestLogout(BaseClass):
 class TestImageUpload(BaseClass):
     #tests that if form information with no information results in no new image to the website
     def test_no_info(self):
+        self.login()
         response = self.app.post('/new_image/upload')
         #if no information posted, should get a 302
         assert response.status_code == 302
@@ -153,6 +154,7 @@ class TestImageUpload(BaseClass):
 
 
     def test_partial_info(self):
+        self.login()
         response = self.app.post(
             '/new_image/authenticate',
             data = {
@@ -167,6 +169,7 @@ class TestImageUpload(BaseClass):
 
 
     def test_valid_info(self):
+        self.login()
         response = self.app.post(
             '/new_image/authenticate',
             data = {
@@ -187,6 +190,7 @@ class TestImageUpload(BaseClass):
 class TestImageDeletion(BaseClass):
     def test_delete(self):
         pass
+        
 
 
 
