@@ -149,5 +149,39 @@ class TestImageUpload(BaseClass):
         #if no information posted, should get a 302
         assert response.status_code == 302
 
+        #make sure no new images were added
+
+
+    def test_partial_info(self):
+        response = self.app.post(
+            '/new_image/authenticate',
+            data = {
+                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg'
+                'caption':'picture of the stars'
+                },
+                follow_redirects = True
+            )
+        assert response.status_code == 302
+
+        #make sure no new images added
+
+
+    def test_valid_info(self):
+        response = self.app.post(
+            '/new_image/authenticate',
+            data = {
+                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg'
+                #radio button...
+                'type'
+                'caption':'picture of the stars'
+                'title':'The Stars'
+                },
+                follow_redirects = True
+            )
+        assert response.status_code == 200
+
+        #should also assert that new image was added
+        #will need to do this, possibly, by counting the number of images before and after
+        #because a 200 is not a valid enough test
 
 
