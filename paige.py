@@ -94,20 +94,24 @@ def new_image():
 @app.route('/new_image/authenticate', methods=['POST'])
 def upload_image():
     try:
-        #test to ensure that every entry field has been entered
-        if (request.form['link'] and 
-            request.form['title'] and 
-            request.form['caption'] and 
-            request.form['type']):
-                
-            #add the image to respective section of website now
+        if verify_login():
+            #test to ensure that every entry field has been entered
+            if (request.form['link'] and 
+                request.form['title'] and 
+                request.form['caption'] and 
+                request.form['type']):
 
-            flash('Image successfully uploaded!')
-            return render_template('admin.html', page='Administration')
-    except:
+                #add the image to respective section of website now
+
+                flash('Image successfully uploaded!')
+                return render_template('admin.html', page='Administration')
+            else:
+                flash('You forgot some entry fields!')
+                return redirect(url_for('new_image'))
+    except KeyError:
         pass
-    flash('You forgot some entry fields!')
-    return redirect(url_for('new_image'))
+    abort(401)
+
 
 #page where Paige can delete images
 @app.route('/delete_image')
