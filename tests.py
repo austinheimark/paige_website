@@ -160,8 +160,8 @@ class TestImageUpload(BaseClass):
     #tests that if form information with no information results in no new image to the website
     def test_no_info(self):
         self.login()
-        response = self.app.post('/new_image/upload')
-        #if no information posted, should get a 302
+        response = self.app.post('/new_image/authenticate')
+        #if no information posted, should get a redirect asking for you to provide more info
         assert response.status_code == 302
 
         #make sure no new images were added
@@ -176,6 +176,7 @@ class TestImageUpload(BaseClass):
                 },
                 follow_redirects = True
             )
+        #deserves a redirect asking for more information
         assert response.status_code == 302
 
         #make sure no new images added
@@ -196,7 +197,7 @@ class TestImageUpload(BaseClass):
 
         #should also assert that new image was added
         #will need to do this, possibly, by counting the number of images before and after
-        #because a 200 is not a valid enough test
+        #because just checking for a status code of 200 is not a valid enough test
 
 @pytest.mark.delete_image
 class TestImageDeletion(BaseClass):
