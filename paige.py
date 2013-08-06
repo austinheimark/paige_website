@@ -91,7 +91,7 @@ def new_image():
     abort(401)   
 
 #accepts form from '/new_image'
-@app.route('/new_image/upload', methods=['POST'])
+@app.route('/new_image/authenticate', methods=['POST'])
 def upload_image():
 
 
