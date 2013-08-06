@@ -95,16 +95,16 @@ def new_image():
 def upload_image():
     try:
         #test to ensure that every entry field has been entered
-        if (request.form['flickr-link'] and 
-            request.form['image-title'] and 
-            request.form['image-caption'] and 
+        if (request.form['link'] and 
+            request.form['title'] and 
+            request.form['caption'] and 
             #radio button...
             request.form['']):
 
             #add the image to respective section of website now
 
 
-            return render_template('succesful_iamge_upload', page='Image Uploaded!')
+            return render_template('succesful_image_upload', page='Image Uploaded!')
     except:
         pass
     flash('You forgot some entry fields!')
