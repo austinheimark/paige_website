@@ -143,6 +143,20 @@ class TestLogout(BaseClass):
 
 @pytest.mark.new_image
 class TestImageUpload(BaseClass):
+    def test_not_logged_in(self):
+        response = self.app.post(
+            '/new_image/authenticate',
+            data = {
+                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg',
+                'type':'drawings',
+                'caption':'picture of the stars',
+                'title':'The Stars'
+                },
+                follow_redirects = True
+            )
+        #unauthorized if not logged in
+        assert response.status_code == 401
+
     #tests that if form information with no information results in no new image to the website
     def test_no_info(self):
         self.login()
