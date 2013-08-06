@@ -184,4 +184,11 @@ class TestImageUpload(BaseClass):
         #will need to do this, possibly, by counting the number of images before and after
         #because a 200 is not a valid enough test
 
+@pytest.mark.delete_image
+class TestImageDeletion(BaseClass):
+    def test_delete(self):
+        
+
+
+
 
