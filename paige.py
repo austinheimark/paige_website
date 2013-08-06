@@ -81,7 +81,6 @@ def logout():
     response.set_cookie(REAL_KEY, 'wrong', expires=0)
     return response
 
-#page where you Paige can add new images, will fill out form with all the options
 @app.route('/new_image')
 def new_image():
     if not verify_login():
@@ -106,16 +105,14 @@ def upload_image():
     response = redirect(url_for('admin'))
     return response
 
-#page where Paige can delete images
 @app.route('/delete_image')
 def delete_image():
-    #if the cookie is valid, then the admin page will be shown, otherwise an abort error
     if not verify_login():
         abort(401)
     
     return render_template('delete_image.html', page='Delete Image')
 
-#is returned when user tries to access a page that they are unauthorized to access
+#401 is when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
     return render_template('unauthorized.html'), 401
