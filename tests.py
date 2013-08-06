@@ -12,7 +12,7 @@ import paige
 
 INCORRECT_RESPONSE = 'incorrect'
 
-class BaseClass(unittest.TestCase):
+class BaseTest(unittest.TestCase):
     def setUp(self):
         paige.app.config['TESTING'] = True
         self.app = app.test_client()
@@ -28,7 +28,7 @@ class BaseClass(unittest.TestCase):
 
 
 @pytest.mark.validpages
-class TestFunctionalGetRequests(BaseClass):
+class TestFunctionalGetRequests(BaseTest):
     def test_home_page(self):
         response = self.app.get('/')
         assert response.status_code == 200
@@ -54,7 +54,7 @@ class TestFunctionalGetRequests(BaseClass):
         assert response.status_code == 200
 
 @pytest.mark.admin
-class TestAdminPages(BaseClass):
+class TestAdminPages(BaseTest):
     def test_logged_in(self):   
         self.login()
         response = self.app.get('/admin')
@@ -91,7 +91,7 @@ class TestAdminPages(BaseClass):
         assert response.status_code == 200
 
 @pytest.mark.login
-class TestLogin(BaseClass):
+class TestLogin(BaseTest):
     def test_page(self):
         response = self.app.get('/login')
         assert response.status_code == 200
@@ -122,7 +122,7 @@ class TestLogin(BaseClass):
         assert response.status_code == 200
 
 @pytest.mark.logout
-class TestLogout(BaseClass):
+class TestLogout(BaseTest):
     def test_logout_logged_in(self):
         #at start you will be logged in
         self.login()
@@ -142,7 +142,7 @@ class TestLogout(BaseClass):
 
 
 @pytest.mark.new_image
-class TestImageUpload(BaseClass):
+class TestImageUpload(BaseTest):
     def test_not_logged_in(self):
         response = self.app.post(
             '/new_image/authenticate',
@@ -200,7 +200,7 @@ class TestImageUpload(BaseClass):
         #because just checking for a status code of 200 is not a valid enough test
 
 @pytest.mark.delete_image
-class TestImageDeletion(BaseClass):
+class TestImageDeletion(BaseTest):
     def test_delete(self):
         pass
 
