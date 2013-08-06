@@ -104,13 +104,15 @@ def upload_image():
                 #add the image to respective section of website now
 
                 flash('Image successfully uploaded!')
-                return render_template('admin.html', page='Administration')
+                response = redirect(url_for('admin'))
+                return response
             else:
                 flash('You forgot some entry fields!')
-                return redirect(url_for('new_image'))
+                response = redirect(url_for('new_image'))
+                return response
     except KeyError:
         pass
-    abort(401)
+    abort(404)
 
 
 #page where Paige can delete images
