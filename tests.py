@@ -141,4 +141,13 @@ class TestLogout(BaseClass):
         assert not self.is_logged_in()
 
 
+@pytest.mark.new_image
+class TestImageUpload(BaseClass):
+    #tests that if form information with no information results in no new image to the website
+    def test_no_info(self):
+        response = self.app.post('/new_image/upload')
+        #if no information posted, should get a 
+        assert response.status_code == 302
+        
+
 
