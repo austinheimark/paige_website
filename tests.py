@@ -171,8 +171,7 @@ class TestImageUpload(BaseClass):
             '/new_image/authenticate',
             data = {
                 'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg'
-                #radio button...
-                'type'
+                'type':'drawings'
                 'caption':'picture of the stars'
                 'title':'The Stars'
                 },
@@ -187,7 +186,7 @@ class TestImageUpload(BaseClass):
 @pytest.mark.delete_image
 class TestImageDeletion(BaseClass):
     def test_delete(self):
-        
+
 
 
 
