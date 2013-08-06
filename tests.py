@@ -173,7 +173,7 @@ class TestImageUpload(BaseTest):
             data = {
                 'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg',
                 'caption':'picture of the stars',
-                'type':'random'
+                'type':'paintings'
                 },
             )
         #deserves a redirect asking for more information
