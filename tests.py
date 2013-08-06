@@ -160,7 +160,7 @@ class TestImageUpload(BaseClass):
     #tests that if form information with no information results in no new image to the website
     def test_no_info(self):
         self.login()
-        response = self.app.post('/new_image/upload')
+        response = self.app.post('/new_image/authenticate')
         #if no information posted, should get a 302
         assert response.status_code == 302
 
