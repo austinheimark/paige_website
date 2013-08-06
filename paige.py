@@ -90,6 +90,11 @@ def new_image():
         pass
     abort(401)   
 
+#accepts form from '/new_image'
+@app.route('/new_image/upload', methods=['POST'])
+def upload_image():
+
+
 #page where Paige can delete images
 @app.route('/delete_image')
 def delete_image():
@@ -100,10 +105,6 @@ def delete_image():
     except KeyError:    #error raised when a dict object is requested and no key is found
         pass
     abort(401)       
-
-#accepts form information and adds the certain image to the correct location
-#@app.route('/image_addition', methods=['POST'])
-#def image_addition():
 
 
 #is returned when user tries to access a page that they are unauthorized to access
