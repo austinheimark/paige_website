@@ -22,27 +22,27 @@ app.secret_key = 'something'
 app.config.from_object(__name__)
 
 #returns true if the user is logged in
-def verify_login():
-    try:
-        return request.cookies[REAL_KEY] == REAL_VALUE
-    except KeyError:
-        return False
+# def verify_login():
+#     try:
+#         return request.cookies[REAL_KEY] == REAL_VALUE
+#     except KeyError:
+#         return False
 
-def init_db():
-    with app.app_context():
-        db = get_db()
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()    
+# def init_db():
+#     with app.app_context():
+#         db = get_db()
+#         with app.open_resource('schema.sql', mode='r') as f:
+#             db.cursor().executescript(f.read())
+#         db.commit()    
 
-def get_db():
-    top = _app_ctx_stack.top
-    if not hasattr(top, 'sqlite_db'):
-        sqlite_db = sqlite3.connect(app.config['DATABASE'])
-        sqlite_db.row_factory = sqlite3.Row
-        top.sqlite_db = sqlite_db
+# def get_db():
+#     top = _app_ctx_stack.top
+#     if not hasattr(top, 'sqlite_db'):
+#         sqlite_db = sqlite3.connect(app.config['DATABASE'])
+#         sqlite_db.row_factory = sqlite3.Row
+#         top.sqlite_db = sqlite_db
 
-    return top.sqlite_db
+#     return top.sqlite_db
 
 @app.route('/')
 def home():
@@ -143,7 +143,7 @@ def not_found(error):
     return render_template('not_found.html'), 404
 
 if __name__ == "__main__":
-    init_db()
+    #init_db()
     app.run(debug=True)
 
 
