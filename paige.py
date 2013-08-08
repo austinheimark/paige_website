@@ -22,11 +22,11 @@ app.secret_key = 'something'
 app.config.from_object(__name__)
 
 #returns true if the user is logged in
-# def verify_login():
-#     try:
-#         return request.cookies[REAL_KEY] == REAL_VALUE
-#     except KeyError:
-#         return False
+def verify_login():
+    try:
+        return request.cookies[REAL_KEY] == REAL_VALUE
+    except KeyError:
+        return False
 
 # def init_db():
 #     with app.app_context():
