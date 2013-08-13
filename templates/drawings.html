@@ -10,7 +10,7 @@
   <!-- Carousel items -->
   {% for image in images %}
   <div class="carousel-inner">
-    <div class="item paige-pics"><img src="{{ image.link }}" width="{{ image.width}}" height="{{ image.height }}" alt="image.alt"></div>
+    <div class="item paige-pics"><img src="{{ image.link }}" width="{{ image.width}}" height="{{ image.height }}" alt="{{ image.alt }}"></div>
     <h1>{{ image.title }}</h1>
     <p>{{ image.caption }}</p>
   </div>
