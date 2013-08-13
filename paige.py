@@ -46,7 +46,6 @@ def init_db():
 
 @app.teardown_appcontext
 def close_db_connection(exception):
-    """Closes the database again at the end of the request."""
     top = _app_ctx_stack.top
     if hasattr(top, 'sqlite_db'):
         top.sqlite_db.close()
