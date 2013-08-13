@@ -4,5 +4,8 @@ create table images (
 	link text not null,
 	title text not null,
 	caption text not null,
-	type text not null
+	type text not null,
+	width integer,
+	height integer,
+	alt text not null
 )
