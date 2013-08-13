@@ -35,6 +35,7 @@ def init_db():
             db.cursor().executescript(f.read())
         db.commit()    
 
+#creates a database connection if there isn't already one
 def get_db():
     top = _app_ctx_stack.top
     if not hasattr(top, 'sqlite_db'):
