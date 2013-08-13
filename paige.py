@@ -165,7 +165,11 @@ def delete_image():
     if not verify_login():
         abort(401)
     
-    return render_template('delete_image.html', page='Delete Image')
+    db = get_db()
+    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    images = cur.fetchall()
+
+    return render_template('delete_image.html', page='Delete Image', images=images)
 
 #401 is when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
