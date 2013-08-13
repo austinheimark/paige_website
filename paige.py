@@ -182,7 +182,7 @@ def actually_delete_image():
 
     delete_this = request.form['img-delete']
     db = get_db()
-    db.execute("delete from images where id = 'delete_this'")
+    db.execute("delete from images where id = " + delete_this)
     db.commit()
     flash('You successfully deleted an image!')
     return redirect(url_for('admin'))
