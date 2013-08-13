@@ -166,7 +166,7 @@ def delete_image():
         abort(401)
     
     db = get_db()
-    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    cur = db.execute('select * from images')
     images = cur.fetchall()
 
     return render_template('delete_image.html', page='Delete Image', images=images)
