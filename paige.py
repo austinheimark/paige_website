@@ -172,7 +172,6 @@ def not_found(error):
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
-    clear_db()
 
 
     
