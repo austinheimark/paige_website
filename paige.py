@@ -143,7 +143,7 @@ def not_found(error):
     return render_template('not_found.html'), 404
 
 if __name__ == "__main__":
-    #init_db()
+    init_db()
     app.run(debug=True)
 
 
