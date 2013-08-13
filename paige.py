@@ -130,6 +130,12 @@ def upload_image():
         response = redirect(url_for('new_image'))
         return response 
 
+    #add form data to the database here
+    db = get_db()
+    db.execute('insert into images (link, title, caption, type) values (?, ?, ?, ?)',
+        [request.form['link'], request.form['title'], request.form['caption'], request.form['type']])
+    db.commit()
+
     flash('Image successfully uploaded!')
     response = redirect(url_for('admin'))
     return response
