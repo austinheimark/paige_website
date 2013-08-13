@@ -15,7 +15,7 @@ import flask
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'password'
-DATABASE = 'tmp/paige_website.db'
+DATABASE = 'paige_website.db'
 
 app = Flask(__name__)
 app.secret_key = 'something'
