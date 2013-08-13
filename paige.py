@@ -28,6 +28,7 @@ def verify_login():
     except KeyError:
         return False
 
+#initializes the database
 def init_db():
     with app.app_context():
         db = get_db()
