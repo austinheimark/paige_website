@@ -76,7 +76,7 @@ def contact():
 @app.route('/drawings')
 def drawings():
     db = get_db()
-    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    cur = db.execute("select link, title, caption, type, width, height, alt from images where type = 'drawings'")
     images = cur.fetchall()
 
     return render_template('drawings.html', page='Drawings', images=images)
@@ -84,7 +84,7 @@ def drawings():
 @app.route('/paintings')
 def paintings():
     db = get_db()
-    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    cur = db.execute("select link, title, caption, type, width, height, alt from images where type = 'paintings'")
     images = cur.fetchall()
 
     return render_template('paintings.html', page='Paintings', images=images)
@@ -92,7 +92,7 @@ def paintings():
 @app.route('/sculptures')
 def sculptures():
     db = get_db()
-    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    cur = db.execute("select link, title, caption, type, width, height, alt from images where type = 'sculptures'")
     images = cur.fetchall()
     
     return render_template('sculptures.html', page='Sculptures', images=images)
