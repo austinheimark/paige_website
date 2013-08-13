@@ -1,5 +1,5 @@
-drop table if exists entries;
-create table entries (
+drop table if exists images;
+create table images (
 	id integer primary key autoincrement,
 	link text not null,
 	title text not null,
