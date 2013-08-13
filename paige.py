@@ -108,6 +108,10 @@ def admin():
 
 @app.route('/login')
 def login():
+    if verify_login():
+        flash('Already logged in!')
+        return redirect(url_for('admin'))
+
     return render_template('login.html', page='Login')
 
 @app.route('/login/authenticate', methods=['POST'])
