@@ -76,7 +76,7 @@ def contact():
 @app.route('/drawings')
 def drawings():
     db = get_db()
-    current = db.execute('select link, title, caption, type from images order by id desc')
+    cur = db.execute('select link, title, caption, type from images order by id desc')
     images = cur.fetchall()
 
     return render_template('drawings.html', page='Drawings', images=images)
