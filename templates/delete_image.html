@@ -7,22 +7,41 @@
 		</form>
 	</div>
 
-	<table border="7">
+	{% if images %}
+	<table cellspacing="7" cellpadding="7" border="7">
 		<tr>
-			<td>Id</td>
+			<td>ID</td>
 			<td>Title</td>
+			<td>Caption</td>
 			<td>Type</td>
+			<td>Link</td>
 		</tr>
 
 		{% for image in images %}
 			<tr>
 				<td>{{ image.id }}</td>
 				<td>{{ image.title }}</td>
+				<td>{{ image.caption }}</td>
 				<td>{{ image.type }}</td>
+				<td>{{ image.link }}</td>
 			</tr>
 		{% endfor %}
 
 	</table>
+	<br>
+
+	<form method="post" action="/delete_image/authenticate">
+		<h4>Choose ID to delete: </h4>
+		<select name="img-delete">
+			{% for image in images %}
+				<option value="{{ image.id }}">{{image.id}}</option>
+			{% endfor %}
+		</select>
+		<br>
+		<button class="btn btn-primary" type="submit">Delete this photo</button>
+	</form>
+	{% endif %}
+
 
 
 {% endblock %}}
