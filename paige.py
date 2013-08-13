@@ -175,6 +175,18 @@ def delete_image():
 
     return render_template('delete_image.html', page='Delete Image', images=images)
 
+@app.route('/delete_image/authenticate', methods=['POST'])
+def actually_delete_image():
+    if not verify_login():
+        abort(401)
+
+    delete_this = request.form['img-delete']
+    db = get_db()
+    db.execute("delete from images where id = 'delete_this'")
+    db.commit()
+    flash('You successfully deleted an image!')
+    return redirect(url_for('admin'))
+
 #401 is when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
