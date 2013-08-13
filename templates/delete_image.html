@@ -7,5 +7,22 @@
 		</form>
 	</div>
 
+	<table border="7">
+		<tr>
+			<td>Id</td>
+			<td>Title</td>
+			<td>Type</td>
+		</tr>
+
+		{% for image in images %}
+			<tr>
+				<td>{{ image.id }}</td>
+				<td>{{ image.title }}</td>
+				<td>{{ image.type }}</td>
+			</tr>
+		{% endfor %}
+
+	</table>
+
 
 {% endblock %}}
