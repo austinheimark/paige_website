@@ -55,6 +55,10 @@ def close_db_connection(exception):
     if hasattr(top, 'sqlite_db'):
         top.sqlite_db.close()
 
+def clear_db():
+    db = get_db()
+    db.execute('delete from images')
+
 @app.route('/')
 def home():
     return render_template('home.html')
