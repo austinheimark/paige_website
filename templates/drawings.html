@@ -8,10 +8,13 @@
     <li data-target="#myCarousel" data-slide-to="2"></li>
   </ol>
   <!-- Carousel items -->
+  {% for image in images %}
   <div class="carousel-inner">
-    <div class="active item paige-pics"><img src="" width="479" height="500" alt="DSCF3809"></div>
-    <div class="item paige-pics"><img src="" width="394" height="500" alt="DSCF3761"></div>
+    <div class="item paige-pics"><img src="{{ image.link }}" width="{{ image.width}}" height="{{ image.height }}" alt="image.alt"></div>
+    <h1>{{ image.title }}</h1>
+    <p>{{ image.caption }}</p>
   </div>
+  {% endfor %}
   <!-- Carousel nav -->
   <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
   <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
