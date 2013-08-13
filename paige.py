@@ -55,9 +55,11 @@ def close_db_connection(exception):
     if hasattr(top, 'sqlite_db'):
         top.sqlite_db.close()
 
+#empties out the database
 def clear_db():
     db = get_db()
     db.execute('delete from images')
+    db.commit()
 
 @app.route('/')
 def home():
@@ -170,7 +172,7 @@ def not_found(error):
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
-
+    clear_db()
 
 
     
