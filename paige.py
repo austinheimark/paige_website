@@ -135,12 +135,12 @@ def upload_image():
     if not verify_login():
         abort(401)
 
-    wanted_keys = ['link', 'title', 'caption', 'type']
+    # wanted_keys = ['link', 'title', 'caption', 'type']
 
-    if not set(wanted_keys) <= set(request.form.keys()):
-        flash('You forgot some entry fields!')
-        response = redirect(url_for('new_image'))
-        return response 
+    # if not set(wanted_keys) <= set(request.form.keys()):
+    #     flash('You forgot some entry fields!')
+    #     response = redirect(url_for('new_image'))
+    #     return response 
 
     #add form data to the database here
     db = get_db()
