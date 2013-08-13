@@ -1,19 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
 
-	<div id="myCarousel" class="carousel slide">
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-  <!-- Carousel items -->
-  <div class="carousel-inner">
-    <div class="active item paige-pics"><img src="" width="500" height="375" alt="photo"></div>
-    <div class="item paige-pics"><img src="" width="500" height="375" alt="DSCF3698"></div>
+<div class="row">
+  {% for image in images %}
+  <div class="span8 paige-pics"><img src="{{ image.link }}" width="{{ image.width}}" height="{{ image.height }}" alt="{{ image.alt }}">
+    <br>
   </div>
-  <!-- Carousel nav -->
-  <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-  <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+  
+  <div class="span4 image-description">
+    <h1>{{ image.title }}</h1>
+    <p>{{ image.caption }}</p>
+  </div>
+  
+  {% endfor %}
 </div>
+
 {% endblock %}
