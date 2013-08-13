@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row">
+  {% for image in images %}
+  <div class="span8 paige-pics"><img src="{{ image.link }}" width="{{ image.width}}" height="{{ image.height }}" alt="{{ image.alt }}">
+    <br>
+  </div>
+  
+  <div class="span4 image-description">
+    <h1>{{ image.title }}</h1>
+    <p>{{ image.caption }}</p>
+  </div>
+  
+  {% endfor %}
+</div>
+{% endblock %}
