@@ -83,11 +83,19 @@ def drawings():
 
 @app.route('/paintings')
 def paintings():
-    return render_template('paintings.html', page='Paintings')
+    db = get_db()
+    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    images = cur.fetchall()
+
+    return render_template('paintings.html', page='Paintings', images=images)
 
 @app.route('/sculptures')
 def sculptures():
-    return render_template('sculptures.html', page='Sculptures')
+    db = get_db()
+    cur = db.execute('select link, title, caption, type, width, height, alt from images')
+    images = cur.fetchall()
+    
+    return render_template('sculptures.html', page='Sculptures', images=images)
 
 @app.route('/admin')
 def admin():
