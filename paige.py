@@ -11,6 +11,7 @@ from flask import (
     )
 
 import flask
+from sqlite3 import dbapi2 as sqlite3
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
