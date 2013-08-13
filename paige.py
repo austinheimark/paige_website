@@ -76,7 +76,7 @@ def contact():
 @app.route('/drawings')
 def drawings():
     db = get_db()
-    cur = db.execute('select link, title, caption, type, width, height, alt from images order by id desc')
+    cur = db.execute('select link, title, caption, type, width, height, alt from images')
     images = cur.fetchall()
 
     return render_template('drawings.html', page='Drawings', images=images)
@@ -144,8 +144,8 @@ def upload_image():
 
     #add form data to the database here
     db = get_db()
-    db.execute('insert into images (link, title, caption, type, width, height, alt) values (?, ?, ?, ?, ?, ?)',
-        [request.form['link'], request.form['title'], request.form['caption'], request.form['type'], request.form['width'], request.form['height'], request.form['alt']])
+    db.execute('insert into images (link, title, caption, type, width, height, alt) values (?, ?, ?, ?, ?, ?, ?)',
+                [request.form['link'], request.form['title'], request.form['caption'], request.form['type'], request.form['width'], request.form['height'], request.form['alt']])
     db.commit()
 
     flash('Image successfully uploaded!')
