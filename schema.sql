@@ -5,7 +5,7 @@ create table images (
 	title text not null,
 	caption text not null,
 	type text not null,
-	width integer,
-	height integer,
+	width text not null,
+	height text not null,
 	alt text not null
 )
