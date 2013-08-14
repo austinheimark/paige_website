@@ -1,12 +1,13 @@
 import unittest
 import pytest
 import flask
+# import tempfile
+# import os
 from paige import (
     app,
     REAL_KEY,
     REAL_VALUE,
-    VALID_PASSWORD,
-
+    VALID_PASSWORD
     )
 import paige
 
@@ -14,8 +15,14 @@ INCORRECT_RESPONSE = 'incorrect'
 
 class BaseTest(unittest.TestCase):
     def setUp(self):
+        # self.db_fd, paige.app.config['DATABASE'] = tempfile.mkstemp()
         paige.app.config['TESTING'] = True
         self.app = app.test_client()
+        # paige.init_db()
+
+    # def tearDown(self):
+    #     os.close(self.db_fd)
+    #     os.unlink(paige.app.config['DATABASE'])
 
     def is_logged_in(self):
         try:
