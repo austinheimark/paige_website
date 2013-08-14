@@ -16,10 +16,8 @@ from sqlite3 import dbapi2 as sqlite3
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'password'
-DATABASE = 'paige_website.db'
 
 app = Flask(__name__)
-app.secret_key = 'something'
 app.config.from_object('config')
 
 #returns true if the user is logged in
@@ -198,7 +196,7 @@ def not_found(error):
 
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run()
 
 
     
