@@ -16,6 +16,9 @@ from sqlite3 import dbapi2 as sqlite3
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'password'
+DATABASE = 'paige_website.db'
+SECRET_KEY = 'something'
+DEBUG = True
 
 app = Flask(__name__)
 app.config.from_object('config')
