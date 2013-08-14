@@ -12,6 +12,8 @@ from flask import (
 
 import flask
 from sqlite3 import dbapi2 as sqlite3
+import flask.ext.sqlalchemy
+import sys
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
@@ -21,6 +23,15 @@ DATABASE = 'paige_website.db'
 app = Flask(__name__)
 app.secret_key = 'something'
 app.config.from_object(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword1@localhost/paigewebsitedb'
+db = flask.ext.sqlalchemy.SQLAlchemy(app)
+
+class Image(db.Model):
+    __tablename__ = 'images'
+    link = db.Column(db.String, primary_key=True)
+    title = db.Column(db.String)
+    caption = db.Column(db.String)
+    kind = db.Column(db.String)
 
 #returns true if the user is logged in
 def verify_login():
@@ -197,8 +208,24 @@ def not_found(error):
     return render_template('not_found.html'), 404
 
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    try:
+        command = sys.argv[1]
+    except IndexError:
+        print('A command is required')
+        sys.exit(1)
+
+    if command == 'initialize_db':
+        db.create_all()
+    elif command == 'serve':
+        pass
+    # else:
+    #     print('A command is required')
+
+
+    # init_db()
+    # app.run(debug=True)
+
+
 
 
     
