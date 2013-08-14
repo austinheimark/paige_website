@@ -207,8 +207,40 @@ class TestImageUpload(BaseTest):
 @pytest.mark.delete_image
 class TestImageDeletion(BaseTest):
     def test_delete(self):
-        pass
+        self.login()
+        
+        #add an image to the database
+        response = self.app.post(
+            '/new_image/authenticate',
+            data = {
+                'link':'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg',
+                'type':'drawings',
+                'caption':'picture of the stars',
+                'title':'The Stars'
+                },
+                follow_redirects = True
+            )
 
+        #assert that image is there
+        # assert b'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg' in response.data
+        # assert b'drawings' in response.data
+        # assert b'picture of the stars' in response.data
+        # assert b'The Stars' in response.data
+
+        #delete that image
+        response = self.app.post(
+            '/delete_image/authenticate',
+            data = {
+                'img-delete':'1'
+                },
+                follow_redirects = True
+            )
+
+        #make sure that image is not there
+        # assert b'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg' not in response.data
+        # assert b'drawings' not in response.data
+        # assert b'picture of the stars' not in response.data
+        # assert b'The Stars' not in response.data
 
 
 
