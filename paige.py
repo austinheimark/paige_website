@@ -218,10 +218,10 @@ if __name__ == "__main__":
         db.create_all()
     elif command == 'serve':
         pass
-    # else:
-    #     print('A command is required')
-
-
+    else:
+        print('Command not recognized')
+        sys.exit(1)
+        
     # init_db()
     # app.run(debug=True)
 
