@@ -21,7 +21,7 @@ SECRET_KEY = 'something'
 DEBUG = True
 
 app = Flask(__name__)
-app.config.from_object('config')
+app.config.from_object(__name__)
 
 #returns true if the user is logged in
 def verify_login():
