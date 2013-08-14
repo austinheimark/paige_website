@@ -198,9 +198,7 @@ class TestImageUpload(BaseTest):
             )
         assert response.status_code == 200
 
-        #should also assert that new image was added
-        #will need to do this, possibly, by counting the number of images before and after
-        #because just checking for a status code of 200 is not a valid enough test
+        #make sure the images were added
         # assert b'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg' in response.data
         # assert b'drawings' in response.data
         # assert b'picture of the stars' in response.data
