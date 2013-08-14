@@ -180,6 +180,9 @@ class TestImageUpload(BaseTest):
         assert response.status_code == 302
 
         #make sure no new images added
+        assert b'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg' not in response.data
+        assert b'picture of the stars' not in response.data
+        assert b'paintings' not in response.data
 
     def test_valid_info(self):
         self.login()
@@ -198,6 +201,10 @@ class TestImageUpload(BaseTest):
         #should also assert that new image was added
         #will need to do this, possibly, by counting the number of images before and after
         #because just checking for a status code of 200 is not a valid enough test
+        # assert b'http://farm8.staticflickr.com/7327/9240544972_4254e5601c.jpg' in response.data
+        # assert b'drawings' in response.data
+        # assert b'picture of the stars' in response.data
+        # assert b'The Stars' in response.data
 
 @pytest.mark.delete_image
 class TestImageDeletion(BaseTest):
