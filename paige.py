@@ -75,7 +75,7 @@ def contact():
 @app.route('/drawings')
 def drawings():
     db = get_db()
-    cur = db.execute("select link, title, caption, type, width, height, alt from images where type = 'drawings'")
+    cur = db.execute("select link, title, caption, type from images where type = 'drawings'")
     images = cur.fetchall()
 
     return render_template('picture.html', page='Drawings', images=images)
@@ -83,7 +83,7 @@ def drawings():
 @app.route('/paintings')
 def paintings():
     db = get_db()
-    cur = db.execute("select link, title, caption, type, width, height, alt from images where type = 'paintings'")
+    cur = db.execute("select link, title, caption, type from images where type = 'paintings'")
     images = cur.fetchall()
 
     return render_template('picture.html', page='Paintings', images=images)
@@ -91,7 +91,7 @@ def paintings():
 @app.route('/sculptures')
 def sculptures():
     db = get_db()
-    cur = db.execute("select link, title, caption, type, width, height, alt from images where type = 'sculptures'")
+    cur = db.execute("select link, title, caption, type from images where type = 'sculptures'")
     images = cur.fetchall()
     
     return render_template('picture.html', page='Sculptures', images=images)
@@ -155,8 +155,8 @@ def upload_image():
 
     #add form data to the database here
     db = get_db()
-    db.execute('insert into images (link, title, caption, type, width, height, alt) values (?, ?, ?, ?, ?, ?, ?)',
-                [request.form['link'], request.form['title'], request.form['caption'], request.form['type'], request.form['width'], request.form['height'], request.form['alt']])
+    db.execute('insert into images (link, title, caption, type) values (?, ?, ?, ?)',
+                [request.form['link'], request.form['title'], request.form['caption'], request.form['type']])
     db.commit()
 
     flash('Image successfully uploaded!')
