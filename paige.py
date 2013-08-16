@@ -11,7 +11,6 @@ from flask import (
     )
 
 import flask
-from sqlite3 import dbapi2 as sqlite3
 import flask.ext.sqlalchemy
 import sys
 
@@ -49,21 +48,21 @@ def init_db():
         db.commit()    
 
 #creates a database connection if there isn't already one
-def get_db():
-    top = _app_ctx_stack.top
-    if not hasattr(top, 'sqlite_db'):
-        sqlite_db = sqlite3.connect(app.config['DATABASE'])
-        sqlite_db.row_factory = sqlite3.Row
-        top.sqlite_db = sqlite_db
+# def get_db():
+#     top = _app_ctx_stack.top
+#     if not hasattr(top, 'sqlite_db'):
+#         sqlite_db = sqlite3.connect(app.config['DATABASE'])
+#         sqlite_db.row_factory = sqlite3.Row
+#         top.sqlite_db = sqlite_db
 
-    return top.sqlite_db
+#     return top.sqlite_db
 
-#closes the database again at the end of the request
-@app.teardown_appcontext
-def close_db_connection(exception):
-    top = _app_ctx_stack.top
-    if hasattr(top, 'sqlite_db'):
-        top.sqlite_db.close()
+# #closes the database again at the end of the request
+# @app.teardown_appcontext
+# def close_db_connection(exception):
+#     top = _app_ctx_stack.top
+#     if hasattr(top, 'sqlite_db'):
+#         top.sqlite_db.close()
 
 #empties out the database
 def clear_db():
