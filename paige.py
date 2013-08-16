@@ -23,7 +23,7 @@ DATABASE = 'paige_website.db'
 app = Flask(__name__)
 app.secret_key = 'something'
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword1@localhost/paigewebsitedb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
 
 class Image(db.Model):
