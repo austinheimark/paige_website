@@ -149,10 +149,6 @@ def delete_image():
     if not verify_login():
         abort(401)
     
-    # db = get_db()
-    # cur = db.execute('select * from images')
-    # images = cur.fetchall()
-
     images = Image.query.all()
 
     return render_template('delete_image.html', page='Delete Image', images=images)
@@ -162,10 +158,10 @@ def actually_delete_image():
     if not verify_login():
         abort(401)
 
-    delete_this = request.form['img-delete']
-    db = get_db()
-    db.execute("delete from images where id = " + delete_this)
-    db.commit()
+    delete_this = Image.query.filter_by(link=request.form['img-delete']).first()
+    db.session.delete(delete_this)
+    db.session.commit()
+
     flash('You successfully deleted an image!')
     return redirect(url_for('admin'))
 
