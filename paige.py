@@ -17,11 +17,11 @@ import sys
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
 VALID_PASSWORD = 'password'
-DATABASE = 'paige_website.db'
 
 app = Flask(__name__)
 app.secret_key = 'something'
 app.config.from_object(__name__)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
 
@@ -32,45 +32,18 @@ class Image(db.Model):
     caption = db.Column(db.String)
     kind = db.Column(db.String)
 
+    def __init__(self, link, title, caption, kind):
+        self.link = link
+        self.title = title
+        self.caption = caption
+        self.kind = kind
+
 #returns true if the user is logged in
 def verify_login():
     try:
         return request.cookies[REAL_KEY] == REAL_VALUE
     except KeyError:
         return False
-
-#initializes the database
-def init_db():
-    # with app.app_context():
-    #     db = get_db()
-    #     with app.open_resource('schema.sql', mode='r') as f:
-    #         db.cursor().executescript(f.read())
-    #     db.commit()    
-    Base.metadata.create_all(bind=engine)
-
-
-#creates a database connection if there isn't already one
-# def get_db():
-#     top = _app_ctx_stack.top
-#     if not hasattr(top, 'sqlite_db'):
-#         sqlite_db = sqlite3.connect(app.config['DATABASE'])
-#         sqlite_db.row_factory = sqlite3.Row
-#         top.sqlite_db = sqlite_db
-
-#     return top.sqlite_db
-
-# #closes the database again at the end of the request
-# @app.teardown_appcontext
-# def close_db_connection(exception):
-#     top = _app_ctx_stack.top
-#     if hasattr(top, 'sqlite_db'):
-#         top.sqlite_db.close()
-
-#empties out the database
-# def clear_db():
-#     db = get_db()
-#     db.execute('delete from images')
-#     db.commit()
 
 @app.route('/')
 def home():
@@ -216,15 +189,11 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if command == 'initialize_db':
-        db.create_all()
-    elif command == 'serve':
-        pass
+        db.create_all()        
     else:
         print('Command not recognized')
         sys.exit(1)
         
-    # init_db()
-    # app.run(debug=True)
 
 
 
