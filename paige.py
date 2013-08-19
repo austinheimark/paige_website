@@ -41,11 +41,13 @@ def verify_login():
 
 #initializes the database
 def init_db():
-    with app.app_context():
-        db = get_db()
-        with app.open_resource('schema.sql', mode='r') as f:
-            db.cursor().executescript(f.read())
-        db.commit()    
+    # with app.app_context():
+    #     db = get_db()
+    #     with app.open_resource('schema.sql', mode='r') as f:
+    #         db.cursor().executescript(f.read())
+    #     db.commit()    
+    Base.metadata.create_all(bind=engine)
+
 
 #creates a database connection if there isn't already one
 # def get_db():
@@ -65,10 +67,10 @@ def init_db():
 #         top.sqlite_db.close()
 
 #empties out the database
-def clear_db():
-    db = get_db()
-    db.execute('delete from images')
-    db.commit()
+# def clear_db():
+#     db = get_db()
+#     db.execute('delete from images')
+#     db.commit()
 
 @app.route('/')
 def home():
