@@ -66,18 +66,14 @@ def drawings():
 
 @app.route('/paintings')
 def paintings():
-    db = get_db()
-    cur = db.execute("select link, title, caption, type from images where type = 'paintings'")
-    images = cur.fetchall()
+    images = Image.query.filter_by(kind='paintings').all()
 
     return render_template('picture.html', page='Paintings', images=images)
 
 @app.route('/sculptures')
 def sculptures():
-    db = get_db()
-    cur = db.execute("select link, title, caption, type from images where type = 'sculptures'")
-    images = cur.fetchall()
-    
+    images = Image.query.filter_by(kind='sculptures').all()
+
     return render_template('picture.html', page='Sculptures', images=images)
 
 @app.route('/admin')
@@ -153,9 +149,11 @@ def delete_image():
     if not verify_login():
         abort(401)
     
-    db = get_db()
-    cur = db.execute('select * from images')
-    images = cur.fetchall()
+    # db = get_db()
+    # cur = db.execute('select * from images')
+    # images = cur.fetchall()
+
+    images = Image.query.all()
 
     return render_template('delete_image.html', page='Delete Image', images=images)
 
