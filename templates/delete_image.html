@@ -10,36 +10,31 @@
 	{% if images %}
 	<table cellspacing="7" cellpadding="7" border="7">
 		<tr>
-			<td>ID</td>
 			<td>Title</td>
 			<td>Caption</td>
-			<td>Type</td>
+			<td>Kind</td>
 			<td>Link</td>
+			<td>Delete</td>
 		</tr>
 
 		{% for image in images %}
 			<tr>
-				<td>{{ image.id }}</td>
 				<td>{{ image.title }}</td>
 				<td>{{ image.caption }}</td>
-				<td>{{ image.type }}</td>
+				<td>{{ image.kind }}</td>
 				<td>{{ image.link }}</td>
+				<td>
+					<form method="post" action="delete_image/authenticate">
+						<input type="hidden" value="{{ image.link }}" name="img-delete">
+						<button class="btn btn-primary" type="submit">Delete</button>
+					</form>
+				</td>
 			</tr>
 		{% endfor %}
 
 	</table>
 	<br>
-
-	<form method="post" action="/delete_image/authenticate">
-		<h4>Choose ID to delete: </h4>
-		<select name="img-delete">
-			{% for image in images %}
-				<option value="{{ image.id }}">{{image.id}}</option>
-			{% endfor %}
-		</select>
-		<br>
-		<button class="btn btn-primary" type="submit">Delete this photo</button>
-	</form>
+	
 	{% else %}
 		<h3>No images to delete!</h3>
 	{% endif %}
