@@ -1,1 +1,1 @@
-web: python paige.py
+web: gunicorn paige:app
