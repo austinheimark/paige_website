@@ -158,7 +158,9 @@ def actually_delete_image():
     if not verify_login():
         abort(401)
 
-    delete_this = Image.query.filter_by(link=request.form['img-delete']).first()
+    link = request.form['img-delete']
+    delete_this = Image.query.get(link)
+
     db.session.delete(delete_this)
     db.session.commit()
 
