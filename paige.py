@@ -126,7 +126,7 @@ def upload_image():
     if not verify_login():
         abort(401)
 
-    wanted_keys = ['link', 'title', 'caption', 'type']
+    wanted_keys = ['link', 'title', 'caption', 'kind']
 
     if not set(wanted_keys) <= set(request.form.keys()):
         flash('You forgot some entry fields!')
@@ -134,7 +134,7 @@ def upload_image():
         return response 
 
     #add form data to the database here
-    new_image = Image(request.form['link'], request.form['title'], request.form['caption'], request.form['type'])    
+    new_image = Image(request.form['link'], request.form['title'], request.form['caption'], request.form['kind'])    
     db.session.add(new_image)
 
     #not sure if we need this
