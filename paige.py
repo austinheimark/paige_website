@@ -21,6 +21,7 @@ VALID_PASSWORD = 'password'
 app = Flask(__name__)
 app.secret_key = 'something'
 app.config.from_object(__name__)
+app.debug = True
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
@@ -59,9 +60,7 @@ def contact():
 
 @app.route('/drawings')
 def drawings():
-    db = get_db()
-    cur = db.execute("select link, title, caption, type from images where type = 'drawings'")
-    images = cur.fetchall()
+    images = Image.query.filter_by(kind='drawings').all()
 
     return render_template('picture.html', page='Drawings', images=images)
 
@@ -139,11 +138,12 @@ def upload_image():
         return response 
 
     #add form data to the database here
-    db = get_db()
-    db.execute('insert into images (link, title, caption, type) values (?, ?, ?, ?)',
-                [request.form['link'], request.form['title'], request.form['caption'], request.form['type']])
-    db.commit()
+    new_image = Image(request.form['link'], request.form['title'], request.form['caption'], request.form['type'])    
+    db.session.add(new_image)
 
+    #not sure if we need this
+    db.session.commit()
+    
     flash('Image successfully uploaded!')
     response = redirect(url_for('admin'))
     return response
