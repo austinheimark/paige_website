@@ -17,6 +17,7 @@ from sqlalchemy.schema import CheckConstraint
 from string import ascii_lowercase, ascii_uppercase
 import random
 import sqlalchemy.orm
+import os
 
 app = Flask(__name__)
 
@@ -24,7 +25,13 @@ app.config.from_object(__name__)
 app.debug = True
 app.secret_key = 'something'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
+try:
+    db_url = os.environ['DATABASE_URL']
+except KeyError:
+    db_url = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
 
 class Image(db.Model):
