@@ -42,7 +42,7 @@ class Image(db.Model):
 
 class Password(db.Model):
     __tablename__ = 'password'
-    id = db.Column(db.Integer, primary_key=True, CheckConstraint('id == 1'))
+    id = db.Column(db.Integer, CheckConstraint('id = 1'), primary_key=True)
     password = db.Column(db.String, nullable=False)
 
     def __init__(self, password):
