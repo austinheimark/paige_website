@@ -151,8 +151,6 @@ def verify_password_change():
     flash('Password successfully changed!')
     return redirect(url_for('admin'))
 
-
-
 @app.route('/login')
 def login():
     if verify_login():
@@ -227,6 +225,11 @@ def upload_image():
         flash('You forgot some entry fields!')
         response = redirect(url_for('new_image'))
         return response 
+
+    existing = Image.query.get(request.form['link'])
+    if existing:
+        flash('Do not upload the same image twice, Paige!')
+        return redirect(url_for('new_image'))
 
     #add form data to the database here
     new_image = Image(request.form['link'], request.form['title'], request.form['caption'], request.form['kind'])    
