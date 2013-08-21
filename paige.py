@@ -17,7 +17,6 @@ from sqlalchemy.schema import CheckConstraint
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
-VALID_PASSWORD = 'password'
 
 app = Flask(__name__)
 app.secret_key = 'something'
@@ -42,13 +41,11 @@ class Image(db.Model):
 
 class Password(db.Model):
     __tablename__ = 'password'
-    id = db.Column(db.Integer, CheckConstraint('id = 1'), primary_key=True)
+    id = db.Column(db.Integer, CheckConstraint('id = 1'), primary_key=True, default=1)
     password = db.Column(db.String, nullable=False)
 
     def __init__(self, password):
         self.password = password
-
-# VALID_PASSWORD = Password.query.all()
 
 #returns true if the user is logged in
 def verify_login():
@@ -106,8 +103,9 @@ def login():
 
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
+    password = Password.query.get(1).password
     try:
-        if request.form['password'] == VALID_PASSWORD:      #if correct password, redirect to admin page and set the cookie
+        if request.form['password'] == password:      #if correct password, redirect to admin page and set the cookie
             response = redirect(url_for('admin'))
             response.set_cookie(REAL_KEY, REAL_VALUE)
             return response
