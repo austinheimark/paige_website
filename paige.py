@@ -16,12 +16,9 @@ import sys
 from sqlalchemy.schema import CheckConstraint
 from string import ascii_lowercase, ascii_uppercase
 import random
-
-REAL_KEY = '9f4yZIjq'
-REAL_VALUE = 'CsyGlIE0'
+import sqlalchemy.orm
 
 app = Flask(__name__)
-app.secret_key = 'something'
 app.config.from_object(__name__)
 app.debug = True
 
@@ -71,9 +68,15 @@ def generate_session_pair():
 
 #returns true if the user is logged in
 def verify_login():
-    session_pair = SessionPair.query.first()
-    if session_pair is None:
+    try:
+        session_pair = SessionPair.query.one()
+    except sqlalchemy.orm.exc.NoResultFound:
         return False
+    except sqlalchemy.orm.exc.MultipleResultsFound:
+        for old_pair in SessionPair.query.all():
+            db.delete(old_pair)
+            db.session.commit()
+            return False
 
     key = session_pair.key
     value = session_pair.value
@@ -144,6 +147,9 @@ def authenticate():
     if not login_succeeded:
         flash('Wrong password, try again!')
         return redirect(url_for('login'))
+
+    for old_pair in SessionPair.query.all():
+        db.session.delete(old_pair)
 
     # set the session pair
     session_pair = generate_session_pair()
