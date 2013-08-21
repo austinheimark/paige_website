@@ -19,8 +19,10 @@ import random
 import sqlalchemy.orm
 
 app = Flask(__name__)
+
 app.config.from_object(__name__)
 app.debug = True
+app.secret_key = 'something'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
 db = flask.ext.sqlalchemy.SQLAlchemy(app)
@@ -123,6 +125,32 @@ def admin():
         abort(401)    
 
     return render_template('admin.html', page='Administration')
+
+@app.route('/update_login')
+def update_login():
+    if not verify_login():
+        abort(401) 
+
+    return render_template('update_login.html', page='Update Login')
+
+@app.route('/update_login/authenticate', methods=['POST'])
+def verify_password_change():
+    if not verify_login():
+        abort(401)
+
+    # make sure the new password is verified
+    if request.form['new_pass'] != request.form['new_pass_confirm']:
+        flash('Not a match. Try again!')
+        return redirect(url_for('update_login'))
+
+    # Remove old password from database
+    password = Password.query.one()
+    password.password = request.form['new_pass']
+    db.session.commit()
+
+    flash('Password successfully changed!')
+    return redirect(url_for('admin'))
+
 
 
 @app.route('/login')
