@@ -14,6 +14,7 @@ import flask
 import flask.ext.sqlalchemy
 import sys
 from sqlalchemy.schema import CheckConstraint
+from string import ascii_lowercase, ascii_uppercase
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
@@ -46,6 +47,26 @@ class Password(db.Model):
 
     def __init__(self, password):
         self.password = password
+
+class SessionPair(db.Model):
+    __tablename__ = 'session_pair'
+    key = db.Column(db.String, primary_key=True)
+    value = db.Column(db.String, nullable=False)
+
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+
+def make_random_string(n):
+    numbers = ''.join([str(x) for x in range(10)])
+    everything = numbers + ascii_lowercase + ascii_uppercase
+    return ''.join([random.choice(everything) for a in range(n)])
+
+def generate_session_pair():
+    key = make_random_string(16)
+    value = make_random_string(16)
+    session_pair = SessionPair(key, value)
+    return session_pair
 
 #returns true if the user is logged in
 def verify_login():
@@ -103,16 +124,44 @@ def login():
 
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
+    # password = Password.query.get(1).password
+    # try:
+    #     if request.form['password'] == password:      #if correct password, redirect to admin page and set the cookie
+    #         response = redirect(url_for('admin'))
+    #         response.set_cookie(REAL_KEY, REAL_VALUE)
+
+
+
+    #         return response
+    # except KeyError:
+    #     pass
+    # flash('Wrong password, try again!')
+    # return redirect(url_for('login'))
+
     password = Password.query.get(1).password
+
+    login_succeeded = True
     try:
-        if request.form['password'] == password:      #if correct password, redirect to admin page and set the cookie
-            response = redirect(url_for('admin'))
-            response.set_cookie(REAL_KEY, REAL_VALUE)
-            return response
+        if request.form['password'] != password:      #if correct password, redirect to admin page and set the cookie
+            login_succeeded = False
     except KeyError:
-        pass
-    flash('Wrong password, try again!')
-    return redirect(url_for('login'))
+        login_succeeded = False
+
+    if not login_succeeded:
+        flash('Wrong password, try again!')
+        return redirect(url_for('login'))
+
+    # set the session pair
+    session_pair = generate_session_pair()
+
+    # add it to the database
+    db.session.add(session_pair)
+    db.session.commit()    
+
+    # set the browser cookie
+    response = redirect(url_for('admin'))
+    response.set_cookie(session_pair.key, session_pair.value)
+    return response
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -145,8 +194,6 @@ def upload_image():
     #add form data to the database here
     new_image = Image(request.form['link'], request.form['title'], request.form['caption'], request.form['kind'])    
     db.session.add(new_image)
-
-    #not sure if we need this
     db.session.commit()
     
     flash('Image successfully uploaded!')
