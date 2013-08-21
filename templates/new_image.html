@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+		
+	<div class="btn-group" id="logout-button">
+  		<form method="post" action="/logout">
+			<button class="btn btn-primary">Logout</button>
+		</form>
+	</div>
+	
+	<form method="post" action="/new_image/authenticate" class="admin-img-form">
+		Link to image on Flickr: <input type="text" name="link"><br><br>
+		Image title: <input type="text" name="title"><br><br>		
+		Image caption: <textarea name="caption" cols="200" rows="5"></textarea><br><br>
+		Where will the image go?
+			<input type="radio" name="kind" value="drawings"> Drawings
+			<input type="radio" name="kind" value="paintings"> Paintings
+			<input type="radio" name="kind" value="sculptures"> Sculptures<br><br>
+		<button class="btn btn-large btn-primary" type="submit">Submit this photo</button>
+	</form>
+
+
+{% endblock %}}

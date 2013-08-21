@@ -29,6 +29,8 @@ body {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 20px;
+	text-align: center;
 }
 
 .errorhandlers {
@@ -50,4 +52,30 @@ body {
 	color: red;
 }
 
+.admin-img-form {
+	padding-left: 50px;
+	padding-top: 30px;
+}
 
+.admin-title {
+	text-align: center;
+}
+
+.link-buttons {
+	text-align: center;
+	padding-left: 200px;
+}
+
+.image-description {
+	text-align: center;
+	margin-top: 100px;
+}
+
+#new-image-header {
+	text-align: center;
+}
+
+#admin-button {
+	float: right;
+	padding-right: 10px;
+}

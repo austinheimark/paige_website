@@ -5,17 +5,88 @@ from flask import (
     abort,
     url_for,
     redirect,
-    flash
+    flash,
+    g,
+     _app_ctx_stack
     )
 
 import flask
-
-REAL_KEY = '9f4yZIjq'
-REAL_VALUE = 'CsyGlIE0'
-VALID_PASSWORD = 'blue willow'
+import flask.ext.sqlalchemy
+import sys
+from sqlalchemy.schema import CheckConstraint
+from string import ascii_lowercase, ascii_uppercase
+import random
+import sqlalchemy.orm
 
 app = Flask(__name__)
+
+app.config.from_object(__name__)
+app.debug = True
 app.secret_key = 'something'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://paigeuser:paigepassword@localhost/paigewebsitedb'
+db = flask.ext.sqlalchemy.SQLAlchemy(app)
+
+class Image(db.Model):
+    __tablename__ = 'images'
+    link = db.Column(db.String, primary_key=True)
+    title = db.Column(db.String)
+    caption = db.Column(db.String)
+    kind = db.Column(db.String)
+
+    def __init__(self, link, title, caption, kind):
+        self.link = link
+        self.title = title
+        self.caption = caption
+        self.kind = kind
+
+class Password(db.Model):
+    __tablename__ = 'password'
+    id = db.Column(db.Integer, CheckConstraint('id = 1'), primary_key=True, default=1)
+    password = db.Column(db.String, nullable=False)
+
+    def __init__(self, password):
+        self.password = password
+
+class SessionPair(db.Model):
+    __tablename__ = 'session_pair'
+    key = db.Column(db.String, primary_key=True)
+    value = db.Column(db.String, nullable=False)
+
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+
+def make_random_string(n):
+    numbers = ''.join([str(x) for x in range(10)])
+    everything = numbers + ascii_lowercase + ascii_uppercase
+    return ''.join([random.choice(everything) for a in range(n)])
+
+def generate_session_pair():
+    key = make_random_string(16)
+    value = make_random_string(16)
+    session_pair = SessionPair(key, value)
+    return session_pair
+
+#returns true if the user is logged in
+def verify_login():
+    try:
+        session_pair = SessionPair.query.one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        return False
+    except sqlalchemy.orm.exc.MultipleResultsFound:
+        for old_pair in SessionPair.query.all():
+            db.delete(old_pair)
+            db.session.commit()
+            return False
+
+    key = session_pair.key
+    value = session_pair.value
+
+    try:
+        return request.cookies[key] == value
+    except KeyError:
+        return False
 
 @app.route('/')
 def home():
@@ -31,61 +102,191 @@ def contact():
 
 @app.route('/drawings')
 def drawings():
-    return render_template('drawings.html', page='Drawings')
+    images = Image.query.filter_by(kind='drawings').all()
+
+    return render_template('picture.html', page='Drawings', images=images)
 
 @app.route('/paintings')
 def paintings():
-    return render_template('paintings.html', page='Paintings')
+    images = Image.query.filter_by(kind='paintings').all()
+
+    return render_template('picture.html', page='Paintings', images=images)
 
 @app.route('/sculptures')
 def sculptures():
-    return render_template('sculptures.html', page='Sculptures')
+    images = Image.query.filter_by(kind='sculptures').all()
+
+    return render_template('picture.html', page='Sculptures', images=images)
 
 @app.route('/admin')
 def admin():
     #if the cookie is valid, then the admin page will be shown, otherwise an abort error
-    try:
-        if request.cookies[REAL_KEY] == REAL_VALUE:
-            return render_template('admin.html', page='Administration')
-    except KeyError:    #error raised when a dict object is requested and no key is found
-        pass
-    abort(401)
+    if not verify_login():
+        abort(401)    
+
+    return render_template('admin.html', page='Administration')
+
+@app.route('/update_login')
+def update_login():
+    if not verify_login():
+        abort(401) 
+
+    return render_template('update_login.html', page='Update Login')
+
+@app.route('/update_login/authenticate', methods=['POST'])
+def verify_password_change():
+    if not verify_login():
+        abort(401)
+
+    # make sure the new password is verified
+    if request.form['new_pass'] != request.form['new_pass_confirm']:
+        flash('Not a match. Try again!')
+        return redirect(url_for('update_login'))
+
+    # Remove old password from database
+    password = Password.query.one()
+    password.password = request.form['new_pass']
+    db.session.commit()
+
+    flash('Password successfully changed!')
+    return redirect(url_for('admin'))
 
 @app.route('/login')
 def login():
+    if verify_login():
+        flash('Already logged in!')
+        return redirect(url_for('admin'))
+
     return render_template('login.html', page='Login')
 
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
+    password = Password.query.get(1).password
+
+    login_succeeded = True
     try:
-        if request.form['password'] == VALID_PASSWORD:      #if correct password, redirect to admin page and set the cookie
-            response = redirect(url_for('admin'))
-            response.set_cookie(REAL_KEY, REAL_VALUE)
-            return response
+        if request.form['password'] != password:      #if correct password, redirect to admin page and set the cookie
+            login_succeeded = False
     except KeyError:
-        pass
-    flash('Wrong password, try again!')
-    return redirect(url_for('login'))
+        login_succeeded = False
+
+    if not login_succeeded:
+        flash('Wrong password, try again!')
+        return redirect(url_for('login'))
+
+    for old_pair in SessionPair.query.all():
+        db.session.delete(old_pair)
+
+    # set the session pair
+    session_pair = generate_session_pair()
+
+    # add it to the database
+    db.session.add(session_pair)
+    db.session.commit()    
+
+    # set the browser cookie
+    response = redirect(url_for('admin'))
+    response.set_cookie(session_pair.key, session_pair.value)
+    return response
 
 @app.route('/logout', methods=['POST'])
 def logout():
-    #logout redirects to the home page
+    # logout redirects to the home page
     response = redirect(url_for('home'))
-    #reset the cookie with the wrong value and an immediate expiration date --> hence logged out
-    response.set_cookie(REAL_KEY, 'wrong', expires=0)
+    # reset the cookie with the wrong value and an immediate expiration date --> hence logged out
+    # don't actually need to remove the cookie from the browser but it still works since if
+    # removed from the database
+    
+    session_pair = SessionPair.query.first()
+    response.set_cookie(session_pair.key, 'wrong', expires=0)
+
+    # remove session pair from the database
+    db.session.delete(session_pair)
+    db.session.commit()
+
     return response
 
-#is returned when user tries to access a page that they are unauthorized to access
+@app.route('/new_image')
+def new_image():
+    if not verify_login():
+        abort(401) 
+
+    return render_template('new_image.html', page='New Image')
+
+#accepts form from '/new_image', authenticates form data, then posts the new image
+@app.route('/new_image/authenticate', methods=['POST'])
+def upload_image():
+    if not verify_login():
+        abort(401)
+
+    wanted_keys = ['link', 'title', 'caption', 'kind']
+
+    if not set(wanted_keys) <= set(request.form.keys()):
+        flash('You forgot some entry fields!')
+        response = redirect(url_for('new_image'))
+        return response 
+
+    existing = Image.query.get(request.form['link'])
+    if existing:
+        flash('Do not upload the same image twice, Paige!')
+        return redirect(url_for('new_image'))
+
+    #add form data to the database here
+    new_image = Image(request.form['link'], request.form['title'], request.form['caption'], request.form['kind'])    
+    db.session.add(new_image)
+    db.session.commit()
+    
+    flash('Image successfully uploaded!')
+    response = redirect(url_for('admin'))
+    return response
+
+@app.route('/delete_image')
+def delete_image():
+    if not verify_login():
+        abort(401)
+    
+    images = Image.query.all()
+
+    return render_template('delete_image.html', page='Delete Image', images=images)
+
+@app.route('/delete_image/authenticate', methods=['POST'])
+def actually_delete_image():
+    if not verify_login():
+        abort(401)
+
+    link = request.form['img-delete']
+    delete_this = Image.query.get(link)
+
+    db.session.delete(delete_this)
+    db.session.commit()
+
+    flash('You successfully deleted an image!')
+    return redirect(url_for('admin'))
+
+#401 is when user tries to access a page that they are unauthorized to access
 @app.errorhandler(401)
 def unauthorized_page(error):
     return render_template('unauthorized.html'), 401
 
+#not found error page
 @app.errorhandler(404)
 def not_found(error):
     return render_template('not_found.html'), 404
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    try:
+        command = sys.argv[1]
+    except IndexError:
+        print('A command is required')
+        sys.exit(1)
+
+    if command == 'initialize_db':
+        db.create_all()        
+    else:
+        print('Command not recognized')
+        sys.exit(1)
+        
+
 
 
 

@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+		
+	<div class="btn-group" id="logout-button">
+  		<form method="post" action="/logout">
+			<button class="btn btn-primary">Logout</button>
+		</form>
+	</div>
+
+	<form method="post" action="/update_login/authenticate">
+		New password: <input type="text" name="new_pass"><br>
+		Confirmation: <input type="text" name="new_pass_confirm"><br>
+		<button class="btn btn-large btn-primary" type="submit">Change password!</button>
+	</form>
+
+
+{% endblock %}}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+		
+	<div class="btn-group" id="logout-button">
+  		<form method="post" action="/logout">
+			<button class="btn btn-primary">Logout</button>
+		</form>
+	</div>
+
+	{% if images %}
+	<table cellspacing="7" cellpadding="7" border="7">
+		<tr>
+			<td>Title</td>
+			<td>Caption</td>
+			<td>Kind</td>
+			<td>Link</td>
+			<td>Delete</td>
+		</tr>
+
+		{% for image in images %}
+			<tr>
+				<td>{{ image.title }}</td>
+				<td>{{ image.caption }}</td>
+				<td>{{ image.kind }}</td>
+				<td>{{ image.link }}</td>
+				<td>
+					<form method="post" action="delete_image/authenticate">
+						<input type="hidden" value="{{ image.link }}" name="img-delete">
+						<button class="btn btn-primary" type="submit">Delete</button>
+					</form>
+				</td>
+			</tr>
+		{% endfor %}
+
+	</table>
+	<br>
+	
+	{% else %}
+		<h3 id="new-image-header">No images to delete!</h3>
+	{% endif %}
+
+
+
+{% endblock %}}

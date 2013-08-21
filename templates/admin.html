@@ -3,8 +3,17 @@
 
 	<div class="btn-group" id="logout-button">
   		<form method="post" action="/logout">
-			<button class="btn">Logout</button>
+			<button class="btn btn-primary">Logout</button>
 		</form>
 	</div>
+	
+	<div class="btn-group link-buttons">
+		<a href="{{ url_for('new_image') }}"><button class="btn btn-primary">New Image</button></a>
+		<br><br>
+		<a href="{{ url_for('delete_image') }}"><button class="btn btn-primary">Delete Image</button></a>
+		<br><br>
+		<a href="{{ url_for('update_login') }}"><button class="btn btn-primary">Change Password</button></a>
+	</div>
+
 
 {% endblock %}}
