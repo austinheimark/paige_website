@@ -13,6 +13,7 @@ from flask import (
 import flask
 import flask.ext.sqlalchemy
 import sys
+from sqlalchemy.schema import CheckConstraint
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
@@ -39,8 +40,13 @@ class Image(db.Model):
         self.caption = caption
         self.kind = kind
 
-# class Password(db.Model):
-#     __tablename__ = 'password'
+class Password(db.Model):
+    __tablename__ = 'password'
+    id = db.Column(db.Integer, primary_key=True, CheckConstraint('id == 1'))
+    password = db.Column(db.String, nullable=False)
+
+    def __init__(self, password):
+        self.password = password
 
 # VALID_PASSWORD = Password.query.all()
 
