@@ -4,6 +4,7 @@ Jinja2==2.7.1
 MarkupSafe==0.18
 SQLAlchemy==0.8.2
 Werkzeug==0.9.3
+gunicorn==17.5
 itsdangerous==0.23
 psycopg2==2.5.1
 py==1.4.15
