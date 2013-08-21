@@ -7,6 +7,10 @@
 		</form>
 	</div>
 
+	<div class="btn-group" id="admin-button">
+		<a href="{{ url_for('admin') }}"><button class="btn btn-primary">Admin</button></a>
+	</div>
+
 	{% if images %}
 	<table cellspacing="7" cellpadding="7" border="7">
 		<tr>
@@ -36,7 +40,7 @@
 	<br>
 	
 	{% else %}
-		<h3>No images to delete!</h3>
+		<h3 id="new-image-header">No images to delete!</h3>
 	{% endif %}
 
 

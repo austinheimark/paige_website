@@ -63,7 +63,6 @@ body {
 
 .link-buttons {
 	text-align: center;
-	padding-top: 100px;
 	padding-left: 200px;
 }
 
@@ -74,4 +73,9 @@ body {
 
 #new-image-header {
 	text-align: center;
+}
+
+#admin-button {
+	float: right;
+	padding-right: 10px;
 }
