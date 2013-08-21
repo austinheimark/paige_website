@@ -15,6 +15,7 @@ import flask.ext.sqlalchemy
 import sys
 from sqlalchemy.schema import CheckConstraint
 from string import ascii_lowercase, ascii_uppercase
+import random
 
 REAL_KEY = '9f4yZIjq'
 REAL_VALUE = 'CsyGlIE0'
@@ -70,8 +71,15 @@ def generate_session_pair():
 
 #returns true if the user is logged in
 def verify_login():
+    session_pair = SessionPair.query.first()
+    if session_pair is None:
+        return False
+
+    key = session_pair.key
+    value = session_pair.value
+
     try:
-        return request.cookies[REAL_KEY] == REAL_VALUE
+        return request.cookies[key] == value
     except KeyError:
         return False
 
@@ -124,20 +132,6 @@ def login():
 
 @app.route('/login/authenticate', methods=['POST'])
 def authenticate():
-    # password = Password.query.get(1).password
-    # try:
-    #     if request.form['password'] == password:      #if correct password, redirect to admin page and set the cookie
-    #         response = redirect(url_for('admin'))
-    #         response.set_cookie(REAL_KEY, REAL_VALUE)
-
-
-
-    #         return response
-    # except KeyError:
-    #     pass
-    # flash('Wrong password, try again!')
-    # return redirect(url_for('login'))
-
     password = Password.query.get(1).password
 
     login_succeeded = True
