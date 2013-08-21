@@ -39,6 +39,11 @@ class Image(db.Model):
         self.caption = caption
         self.kind = kind
 
+# class Password(db.Model):
+#     __tablename__ = 'password'
+
+# VALID_PASSWORD = Password.query.all()
+
 #returns true if the user is logged in
 def verify_login():
     try:
