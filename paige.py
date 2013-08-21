@@ -164,10 +164,11 @@ def logout():
     # reset the cookie with the wrong value and an immediate expiration date --> hence logged out
     # don't actually need to remove the cookie from the browser but it still works since if
     # removed from the database
-    response.set_cookie(REAL_KEY, 'wrong', expires=0)
+    
+    session_pair = SessionPair.query.first()
+    response.set_cookie(session_pair.key, 'wrong', expires=0)
 
     # remove session pair from the database
-    session_pair = SessionPair.query.first()
     db.session.delete(session_pair)
     db.session.commit()
 
