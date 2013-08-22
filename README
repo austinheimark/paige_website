@@ -1,5 +1,7 @@
 -Website to help my sister display her artwork
 -Backend is written in Python using the Flask micro framework
 -Frontend uses the Twitter Bootstrap
--Deployed on Heroku
--Written on a Mac
+-Uses a SQLAlchemy database connected to a PostgreSQL database
+-Deployed on the Heroku cloud
+-Written using Sublime Text 2
+-http://www.paigeheimark.com

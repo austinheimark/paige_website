@@ -5,9 +5,7 @@ from flask import (
     abort,
     url_for,
     redirect,
-    flash,
-    g,
-     _app_ctx_stack
+    flash
     )
 
 import flask
@@ -253,6 +251,10 @@ def delete_image():
         abort(401)
     
     images = Image.query.all()
+
+    if not images:
+        flash('No images to delete!')
+        return redirect(url_for('admin'))
 
     return render_template('delete_image.html', page='Delete Image', images=images)
 
